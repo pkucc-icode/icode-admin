@@ -4,7 +4,6 @@
       v-if="
         !isMobile && isMixMenuNoneSub && (navMode === 'vertical' || navMode === 'horizontal-mix')
       "
-      show-trigger="bar"
       @collapse="collapsed = true"
       :position="fixedMenu"
       @expand="collapsed = false"
@@ -14,13 +13,16 @@
       :width="leftMenuWidth"
       :native-scrollbar="false"
       :inverted="inverted"
-      class="layout-sider"
+      class="layout-sider glass-card rounded-[30px]"
     >
-      <Logo :collapsed="collapsed" />
-      <AsideMenu v-model:collapsed="collapsed" v-model:location="getMenuLocation" />
+      
+      <Logo :collapsed="collapsed"/>
+      <ScrollArea class="h-[calc(100vh-152px)]">
+        <AsideMenu v-model:collapsed="collapsed" v-model:location="getMenuLocation" />
+      </ScrollArea>
     </n-layout-sider>
 
-    <n-drawer
+    <!-- <n-drawer
       v-model:show="showSideDrawer"
       :width="menuWidth"
       :placement="'left'"
@@ -37,48 +39,49 @@
         <Logo :collapsed="collapsed" />
         <AsideMenu v-model:location="getMenuLocation" />
       </n-layout-sider>
-    </n-drawer>
+    </n-drawer> -->
 
-    <n-layout :inverted="inverted">
-      <n-layout-header :inverted="getHeaderInverted" :position="fixedHeader">
-        <PageHeader v-model:collapsed="collapsed" :inverted="inverted" />
+    <n-layout :inverted="inverted" class="bg-transparent flex flex-col">
+      <n-layout-header :inverted="getHeaderInverted" :position="fixedHeader" class="bg-transparent">
+        <div class="rounded-[30px] mt-4 mr-4 ml-2 glass-card ">
+          <PageHeader v-model:collapsed="collapsed" :inverted="inverted" />
+        </div>
       </n-layout-header>
-
-      <n-layout-content
-        class="layout-content"
-        :class="{ 'layout-default-background': getDarkTheme === false }"
+      <div class="h-[calc(100vh-96px)] ml-2 mr-4 mt-[80px] overflow-y-hidden rounded-[30px] glass-card relative"
       >
-        <div
-          class="layout-content-main"
+        <ScrollArea
+          class="p-4"
           :class="{
-            'layout-content-main-fix': fixedMulti,
-            'fluid-header': fixedHeader === 'static',
+            'h-[calc(100vh-152px)] bottom-0 absolute w-full': fixedMulti
           }"
         >
-          <TabsView v-if="isMultiTabs" v-model:collapsed="collapsed" />
+          <TabsView v-if="isMultiTabs" v-model:collapsed="collapsed" />                     
+
           <div
-            class="main-view"
+            class="layout-content-main"
             :class="{
-              'main-view-fix': fixedMulti,
-              noMultiTabs: !isMultiTabs,
-              'mt-3': !isMultiTabs,
+              'layout-content-main-fix': fixedMulti,
+              'fluid-header': fixedHeader === 'static',
             }"
           >
             <MainView />
           </div>
-        </div>
-        <!--1.15废弃，没啥用，占用操作空间-->
-        <!--        <NLayoutFooter v-if="getShowFooter">-->
-        <!--          <PageFooter />-->
-        <!--        </NLayoutFooter>-->
-      </n-layout-content>
+          <!--1.15废弃，没啥用，占用操作空间-->
+          <!--        <NLayoutFooter v-if="getShowFooter">-->
+          <!--          <PageFooter />-->
+          <!--        </NLayoutFooter>-->
+        </ScrollArea>
+
+      </div>
+
       <n-back-top :right="100" />
     </n-layout>
   </n-layout>
 </template>
 
 <script lang="ts" setup>
-  import { ref, unref, computed, onMounted } from 'vue';
+  import { ref, unref, computed, onMounted } from 'vue'
+  import { ScrollArea } from '@/components/ScrollArea';
   import { Logo } from './components/Logo';
   import { TabsView } from './components/TagsView';
   import { MainView } from './components/Main';
@@ -156,10 +159,10 @@
   });
 
   // 控制显示或隐藏移动端侧边栏
-  const showSideDrawer = computed({
-    get: () => isMobile.value && collapsed.value,
-    set: (val) => (collapsed.value = val),
-  });
+  // const showSideDrawer = computed({
+  //   get: () => isMobile.value && collapsed.value,
+  //   set: (val) => (collapsed.value = val),
+  // });
 
   //判断是否触发移动端模式
   const checkMobileMode = () => {
@@ -188,11 +191,11 @@
 
 <style lang="less">
   .layout-side-drawer {
-    background-color: rgb(0, 20, 40);
+    // background-color: rgb(0, 20, 40);
 
     .layout-sider {
       min-height: 100vh;
-      box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+      // box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
       position: relative;
       z-index: 13;
       transition: all 0.2s ease-in-out;
@@ -204,14 +207,18 @@
     display: flex;
     flex-direction: row;
     flex: auto;
+    // background-image: linear-gradient(to right bottom, #d8e4ff, #dfe6fc, #e5e7f9, #eaeaf6, #edecf3, #eeecf4, #efedf4, #f0edf5, #f2ebf8, #f5e8fb, #fae4fc, #ffe1fc);
+    // background: url("/R-C.jpg") no-repeat center center / cover !important;
+    background: var(--background);
 
     &-default-background {
-      background: #f5f7f9;
+      background: var(--background);
     }
 
     .layout-sider {
-      min-height: 100vh;
-      box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
+      min-height: calc(100vh - 32px);
+      margin: 16px 8px 16px 16px;
+      // box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
       position: relative;
       z-index: 13;
       transition: all 0.2s ease-in-out;
@@ -235,8 +242,9 @@
     }
 
     .layout-content {
-      flex: auto;
-      min-height: 100vh;
+      // flex: auto;
+      width: 100%;
+      height: 100%;
     }
 
     .n-layout-header.n-layout-header--absolute-positioned {
@@ -249,24 +257,23 @@
   }
 
   .layout-content-main {
-    margin: 0 10px 10px;
     position: relative;
-    padding-top: 64px;
   }
 
-  .layout-content-main-fix {
-    padding-top: 64px;
-  }
+  // .layout-content-main-fix {
+    // margin-top: 42px;    
+  // }
 
   .fluid-header {
     padding-top: 0;
   }
 
-  .main-view-fix {
-    padding-top: 44px;
-  }
+  // .main-view-fix {
+    // padding-top: 44px;
+  // }
 
   .noMultiTabs {
     padding-top: 0;
   }
+
 </style>

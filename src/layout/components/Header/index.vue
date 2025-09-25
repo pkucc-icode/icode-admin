@@ -30,8 +30,9 @@
           <MenuFoldOutlined />
         </n-icon>
       </div>
+      <SearchInput />
       <!-- 刷新 -->
-      <div
+      <!-- <div
         class="mr-1 layout-header-trigger layout-header-trigger-min"
         v-if="headerSetting.isReload"
         @click="reloadPage"
@@ -39,9 +40,9 @@
         <n-icon size="18">
           <ReloadOutlined />
         </n-icon>
-      </div>
+      </div> -->
       <!-- 面包屑 -->
-      <n-breadcrumb v-if="crumbsSetting.show">
+      <!-- <n-breadcrumb v-if="crumbsSetting.show">
         <template
           v-for="routeItem in breadcrumbList"
           :key="routeItem.name === RedirectName ? void 0 : routeItem.name"
@@ -69,10 +70,10 @@
             </span>
           </n-breadcrumb-item>
         </template>
-      </n-breadcrumb>
+      </n-breadcrumb> -->
     </div>
     <div class="layout-header-right">
-      <div
+      <!-- <div
         class="layout-header-trigger layout-header-trigger-min"
         v-for="item in iconList"
         :key="item.icon"
@@ -85,9 +86,9 @@
           </template>
           <span>{{ item.tips }}</span>
         </n-tooltip>
-      </div>
+      </div> -->
       <!--切换全屏-->
-      <div class="layout-header-trigger layout-header-trigger-min">
+      <!-- <div class="layout-header-trigger layout-header-trigger-min">
         <n-tooltip placement="bottom">
           <template #trigger>
             <n-icon size="18">
@@ -96,9 +97,9 @@
           </template>
           <span>全屏</span>
         </n-tooltip>
-      </div>
+      </div> -->
       <!-- 个人中心 -->
-      <div class="layout-header-trigger layout-header-trigger-min">
+      <div class="layout-header-trigger layout-header-trigger-min h-[32px]">
         <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
           <div class="avatar">
             <n-avatar :src="websiteConfig.logo">
@@ -106,8 +107,8 @@
                 <UserOutlined />
               </template>
             </n-avatar>
-            <n-divider vertical />
-            <span>{{ username }}</span>
+            <!-- <n-divider vertical /> -->
+            <!-- <span>{{ username }}</span> -->
           </div>
         </n-dropdown>
       </div>
@@ -141,6 +142,7 @@
   import { useRoute, useRouter } from 'vue-router';
   import components from './components';
   import ProjectSetting from './ProjectSetting.vue';
+  import { SearchInput } from '@/components/Search';
 
   export default defineComponent({
     name: 'PageHeader',
@@ -359,8 +361,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0;
-    height: 64px;
-    box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+    height: 48px;
+    // box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
     transition: all 0.2s ease-in-out;
     width: 100%;
     z-index: 11;
@@ -373,8 +375,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 64px;
-        line-height: 64px;
+        height: 48px;
+        line-height: 48px;
         overflow: hidden;
         white-space: nowrap;
         padding-left: 10px;
@@ -399,19 +401,21 @@
       }
 
       &-menu {
-        color: var(--text-color);
+        color: var(--foreground);
       }
     }
 
     &-right {
       display: flex;
       align-items: center;
-      margin-right: 20px;
+      margin-right: 0;
 
       .avatar {
         display: flex;
-        align-items: center;
-        height: 64px;
+        align-items: center; 
+        overflow: hidden;
+        border-radius: 50%;
+        height: 32px;
       }
 
       > * {
@@ -421,8 +425,8 @@
 
     &-trigger {
       display: inline-block;
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
@@ -430,8 +434,8 @@
       .n-icon {
         display: flex;
         align-items: center;
-        height: 64px;
-        line-height: 64px;
+        height: 48px;
+        line-height: 48px;
       }
 
       &:hover {

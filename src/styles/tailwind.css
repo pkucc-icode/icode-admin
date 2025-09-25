@@ -2,3 +2,88 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/*---break--- */
+@layer base {
+  :root {
+    --background: #EBEBEB;
+    --foreground: #000000;
+    --card: #FFFFFF;
+    --card-foreground: #0A0A0A;
+    --popover: #FFFFFF;
+    --popover-foreground: #0A0A0A;
+    --primary: #BD1714;
+    --primary-foreground: #FFFFFF;
+    --secondary: #E6E6E6;
+    --secondary-foreground: #393D47;
+    --muted: #F6D1CD;
+    --muted-foreground: #BD1714;
+    --shallow: #ffe6e3;
+    --shallow-foreground: #c0a5a5;
+    --accent: #292929;
+    --accent-foreground: #FFFFFF;
+    --decoration: #A6B6DE;
+    --decoration-foreground: #FFFFFF;
+    --destructive: #F2524D;
+    --destructive-foreground: #FAFAFA;
+    --border: #E6E6E6;
+    --input: #E5E5E5;
+    --ring: #BD1714;
+    --chart-1: #F29D53;
+    --chart-2: #2BB89A;
+    --chart-3: #19605C;
+    --chart-4: #A5C43A;
+    --chart-5: #E9E237;
+    --radius: 0.5rem;
+    --text: #606775;
+    --info: #3A6CCA;
+    --success: #56BE66;
+    --warning: #F0A020;
+    --error: #EF4C4C;
+  }
+
+  .dark {
+    --background: #111111;
+    --foreground: #FFFFFF;
+    --card: #FFFFFF;
+    --card-foreground: #0A0A0A;
+    --popover: #FFFFFF;
+    --popover-foreground: #0A0A0A;
+    --primary: #BD1714;
+    --primary-foreground: #FFFFFF;
+    --secondary: #242424;
+    --secondary-foreground: #E6E6E6;
+    --muted: #201b1b;
+    --muted-foreground: #BD1714;
+    --shallow: #727272;
+    --shallow-foreground: #eeeeee;
+    --accent: #ffffff;
+    --accent-foreground: #201b1b;
+    --decoration: #353c4b;
+    --decoration-foreground: #FFFFFF;
+    --destructive: #F2524D;
+    --destructive-foreground: #FAFAFA;
+    --border: #2c2c2c;
+    --input: #E5E5E5;
+    --ring: #BD1714;
+    --chart-1: #F29D53;
+    --chart-2: #2BB89A;
+    --chart-3: #19605C;
+    --chart-4: #A5C43A;
+    --chart-5: #E9E237;
+    --radius: 0.5rem;
+    --text: #dfdfdf;
+    --info: #5588e7;
+    --success: #7adb89;
+    --warning: #F0A020;
+    --error: #db4646;
+  }
+}
+/*---break--- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

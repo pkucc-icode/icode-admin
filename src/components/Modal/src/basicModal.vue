@@ -8,10 +8,10 @@
     </template>
     <template #action v-if="!$slots.action">
       <n-space>
-        <n-button @click="closeModal">取消</n-button>
-        <n-button type="primary" :loading="subLoading" @click="handleSubmit">{{
+        <Button @click="closeModal">取消</Button>
+        <Button type="primary" :loading="subLoading" @click="handleSubmit">{{
           subBtuText
-        }}</n-button>
+        }}</Button>
       </n-space>
     </template>
     <template v-else #action>
@@ -26,6 +26,7 @@
   import startDrag from '@/utils/Drag';
   import { deepMerge } from '@/utils';
   import { FormProps } from '@/components/Form';
+  import { Button } from '@/components/Button';
   import { ModalProps, ModalMethods } from './type';
 
   const attrs = useAttrs();

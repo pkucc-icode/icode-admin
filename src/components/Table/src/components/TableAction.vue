@@ -1,13 +1,10 @@
 <template>
   <div class="tableAction">
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center gap-2">
       <template v-for="(action, index) in getActions" :key="`${index}-${action.label}`">
-        <n-button v-bind="action" class="mx-1">
+        <Button v-bind="action" :icon="action.icon">
           {{ action.label }}
-          <template #icon v-if="action.hasOwnProperty('icon')">
-            <n-icon :component="action.icon" />
-          </template>
-        </n-button>
+        </Button>
       </template>
       <n-dropdown
         v-if="dropDownActions && getDropdownList.length"
@@ -38,6 +35,7 @@
   import { usePermission } from '@/hooks/web/usePermission';
   import { isBoolean, isFunction } from '@/utils/is';
   import { DownOutlined } from '@vicons/antd';
+  import { Button } from '@/components/Button';
 
   export default defineComponent({
     name: 'TableAction',

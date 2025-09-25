@@ -1,84 +1,82 @@
 <template>
-  <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础表单">
-        表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式。
-      </n-card>
-    </div>
-    <n-card :bordered="false" class="mt-4 proCard">
-      <n-grid cols="1 s:1 m:3 l:3 xl:3 2xl:3" responsive="screen">
-        <n-grid-item offset="0 s:0 m:1 l:1 xl:1 2xl:1">
-          <n-form
-            :label-width="90"
-            :model="formValue"
-            :rules="rules"
-            label-placement="left"
-            ref="formRef"
-            class="py-8"
-          >
-            <n-form-item label="预约姓名" path="name">
-              <n-input v-model:value="formValue.name" placeholder="输入姓名" />
-            </n-form-item>
-            <n-form-item label="预约号码" path="mobile">
-              <n-input placeholder="电话号码" v-model:value="formValue.mobile" />
-            </n-form-item>
-            <n-form-item label="预约时间" path="datetime">
-              <n-date-picker type="datetime" v-model:value="formValue.datetime" />
-            </n-form-item>
-            <n-form-item label="预约医生" path="doctor">
-              <n-select
-                placeholder="请选择预约医生"
-                :options="doctorList"
-                v-model:value="formValue.doctor"
-              />
-            </n-form-item>
-            <n-form-item label="预约事项" path="matter">
-              <n-select
-                placeholder="请选择预约事项"
-                :options="matterList"
-                v-model:value="formValue.matter"
-                multiple
-              />
-            </n-form-item>
-            <n-form-item label="性别" path="sex">
-              <n-radio-group v-model:value="formValue.sex" name="sex">
-                <n-space>
-                  <n-radio :value="1">男</n-radio>
-                  <n-radio :value="2">女</n-radio>
-                </n-space>
-              </n-radio-group>
-            </n-form-item>
-            <n-form-item label="预约备注" path="remark">
-              <n-input
-                v-model:value="formValue.remark"
-                type="textarea"
-                placeholder="请输入预约备注"
-              />
-            </n-form-item>
-            <n-form-item label="图片" path="img">
-              <BasicUpload
-                :action="`${uploadUrl}/v1.0/files`"
-                :headers="uploadHeaders"
-                :data="{ type: 0 }"
-                name="files"
-                :width="100"
-                :height="100"
-                @upload-change="uploadChange"
-                v-model:value="uploadList"
-                helpText="单个文件不超过20MB，最多只能上传10个文件"
-              />
-            </n-form-item>
-            <div style="margin-left: 80px">
+  <Card class="mb-4" show-header>
+    <template #header>基础表单</template>
+    表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式。
+  </Card>
+  <Card>
+    <n-grid cols="1 s:1 m:3 l:3 xl:3 2xl:3" responsive="screen">
+      <n-grid-item offset="0 s:0 m:1 l:1 xl:1 2xl:1">
+        <n-form
+          :label-width="90"
+          :model="formValue"
+          :rules="rules"
+          label-placement="left"
+          ref="formRef"
+          class="py-8"
+        >
+          <n-form-item label="预约姓名" path="name">
+            <Input v-model="formValue.name" placeholder="输入姓名" />
+            <!-- <n-input v-model:value="formValue.name" placeholder="输入姓名" /> -->
+          </n-form-item>
+          <n-form-item label="预约号码" path="mobile">
+            <n-input placeholder="电话号码" v-model:value="formValue.mobile" />
+          </n-form-item>
+          <n-form-item label="预约时间" path="datetime">
+            <n-date-picker type="datetime" v-model:value="formValue.datetime" />
+          </n-form-item>
+          <n-form-item label="预约医生" path="doctor">
+            <Select
+              placeholder="请选择预约医生"
+              :options="doctorList"
+              v-model="formValue.doctor"
+            />
+          </n-form-item>
+          <n-form-item label="预约事项" path="matter">
+            <n-select
+              placeholder="请选择预约事项"
+              :options="matterList"
+              v-model:value="formValue.matter"
+              multiple
+            />
+          </n-form-item>
+          <n-form-item label="性别" path="sex">
+            <n-radio-group v-model:value="formValue.sex" name="sex">
               <n-space>
-                <n-button type="primary" @click="formSubmit">提交预约</n-button>
-                <n-button @click="resetForm">重置</n-button>
+                <n-radio :value="1">男</n-radio>
+                <n-radio :value="2">女</n-radio>
               </n-space>
-            </div>
-          </n-form>
-        </n-grid-item>
-      </n-grid>
-    </n-card>
-  </div>
+            </n-radio-group>
+          </n-form-item>
+          <n-form-item label="预约备注" path="remark">
+            <n-input
+              v-model:value="formValue.remark"
+              type="textarea"
+              placeholder="请输入预约备注"
+            />
+          </n-form-item>
+          <n-form-item label="图片" path="img">
+            <BasicUpload
+              :action="`${uploadUrl}/v1.0/files`"
+              :headers="uploadHeaders"
+              :data="{ type: 0 }"
+              name="files"
+              :width="100"
+              :height="100"
+              @upload-change="uploadChange"
+              v-model:value="uploadList"
+              helpText="单个文件不超过20MB，最多只能上传10个文件"
+            />
+          </n-form-item>
+          <div style="margin-left: 80px">
+            <n-space>
+              <n-button type="primary" @click="formSubmit">提交预约</n-button>
+              <n-button @click="resetForm">重置</n-button>
+            </n-space>
+          </div>
+        </n-form>
+      </n-grid-item>
+    </n-grid>
+  </Card>
 </template>
 
 <script lang="ts" setup>
@@ -86,6 +84,8 @@
   import { useMessage } from 'naive-ui';
   import { BasicUpload } from '@/components/Upload';
   import { useGlobSetting } from '@/hooks/setting';
+  import { Input } from '@/components/Input';
+  import { Select } from '@/components/Select';
 
   const globSetting = useGlobSetting();
 
@@ -176,6 +176,8 @@
   function formSubmit() {
     formRef.value.validate((errors) => {
       if (!errors) {
+        console.log(formRef.value.model);
+        
         message.success('验证成功');
       } else {
         message.error('验证失败，请填写完整信息');

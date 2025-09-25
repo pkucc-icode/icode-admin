@@ -7,7 +7,7 @@
         <div class="justify-center drawer-setting-item dark-switch">
           <n-tooltip placement="bottom">
             <template #trigger>
-              <n-switch v-model:value="designStore.darkTheme" class="dark-theme-switch">
+              <n-switch :value="designStore.darkTheme" @update:value="designStore.setDarkTheme" class="dark-theme-switch">
                 <template #checked>
                   <n-icon size="14" color="#ffd93b">
                     <SunnySharp />

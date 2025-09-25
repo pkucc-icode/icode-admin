@@ -11,6 +11,8 @@
     :value="getSelectedKeys"
     @update:value="clickMenuItem"
     @update:expanded-keys="menuExpanded"
+    :theme-overrides="customTheme"
+    :key="inverted ? 'menu-dark' : 'menu-light'"
   />
 </template>
 
@@ -54,6 +56,90 @@
 
       const { navMode } = useProjectSetting();
 
+      const customTheme = computed(() => {
+        // 基于 CSS 变量的统一色彩定义
+        const base = {
+          itemTextColor: 'var(--foreground)',
+          itemIconColor: 'var(--primary)',
+
+          itemColorHover: 'var(--muted)',
+          itemTextColorHover: 'var(--muted-foreground)',
+          itemIconColorHover: 'var(--muted-foreground)',
+
+          itemColorActive: 'var(--primary)',
+          itemColorActiveCollapsed: 'var(--primary)',
+          itemTextColorActive: 'var(--accent-foreground)',
+          itemIconColorActive: 'var(--accent-foreground)',
+
+          itemColorActiveHover: 'var(--primary)',
+          itemTextColorActiveHover: 'var(--accent-foreground)',
+          itemIconColorActiveHover: 'var(--accent-foreground)',
+
+          itemColorChildActive: 'var(--primary)',
+          itemTextColorChildActive: 'var(--primary)',
+          itemIconColorChildActive: 'var(--primary)',
+
+          itemColorChildActiveHover: 'var(--primary)',
+          itemTextColorChildActiveHover: 'var(--primary)',
+          itemIconColorChildActiveHover: 'var(--primary)',
+
+          // 圆角
+          borderRadius: '0.5rem'
+        } as const
+
+        // 让箭头颜色与文本颜色保持一致（普通模式）
+        const arrowFromText = {
+          arrowColor: base.itemTextColor,
+          arrowColorHover: base.itemTextColorHover,
+          arrowColorActive: base.itemTextColorActive,
+          arrowColorActiveHover: base.itemTextColorActiveHover,
+          arrowColorChildActive: base.itemTextColorChildActive,
+          arrowColorChildActiveHover: base.itemTextColorChildActiveHover,
+        } as const
+
+        // 为 inverted（暗色）模式提供对应的覆盖键，确保 :inverted 时生效
+        const inverted = {
+          itemTextColorInverted: base.itemTextColor,
+          itemIconColorInverted: base.itemIconColor,
+
+          itemColorHoverInverted: base.itemColorHover,
+          itemTextColorHoverInverted: base.itemTextColorHover,
+          itemIconColorHoverInverted: base.itemIconColorHover,
+
+          itemColorActiveInverted: base.itemColorActive,
+          itemColorActiveCollapsedInverted: base.itemColorActiveCollapsed,
+          itemTextColorActiveInverted: base.itemTextColorActive,
+          itemIconColorActiveInverted: base.itemIconColorActive,
+
+          itemColorActiveHoverInverted: base.itemColorActiveHover,
+          itemTextColorActiveHoverInverted: base.itemTextColorActiveHover,
+          itemIconColorActiveHoverInverted: base.itemIconColorActiveHover,
+
+          itemTextColorChildActiveInverted: base.itemTextColorChildActive,
+          itemIconColorChildActiveInverted: base.itemIconColorChildActive,
+
+          itemColorChildActiveHoverInverted: base.itemColorChildActiveHover,
+          itemTextColorChildActiveHoverInverted: base.itemTextColorChildActiveHover,
+          itemIconColorChildActiveHoverInverted: base.itemIconColorChildActiveHover,
+
+          // 让箭头颜色与文本颜色保持一致（暗色模式专用键）
+          arrowColorInverted: base.itemTextColor,
+          arrowColorHoverInverted: base.itemTextColorHover,
+          arrowColorActiveInverted: base.itemTextColorActive,
+          arrowColorActiveHoverInverted: base.itemTextColorActiveHover,
+          arrowColorChildActiveInverted: base.itemTextColorChildActive,
+          arrowColorChildActiveHoverInverted: base.itemTextColorChildActiveHover,
+
+          borderRadius: base.borderRadius,
+        } as const
+
+        return {
+          ...base,
+          ...arrowFromText,
+          ...inverted,
+        }
+      });
+
       // 获取当前打开的子菜单
       const matched = currentRoute.matched;
 
@@ -84,13 +170,6 @@
           }
         }
       );
-
-      // 监听菜单收缩状态
-      // watch(
-      //   () => props.collapsed,
-      //   (newVal) => {
-      //   }
-      // );
 
       // 跟随页面路由变化，切换菜单选中状态
       watch(
@@ -163,6 +242,7 @@
         getSelectedKeys,
         clickMenuItem,
         menuExpanded,
+        customTheme
       };
     },
   });

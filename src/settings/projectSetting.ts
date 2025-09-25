@@ -2,13 +2,13 @@ const setting = {
   //导航模式 vertical 左侧菜单模式 horizontal 顶部菜单模式
   navMode: 'vertical',
   //导航风格 dark 暗色侧边栏 light 白色侧边栏 header-dark 暗色顶栏
-  navTheme: 'dark',
+  navTheme: 'light',
   // 是否处于移动端模式
   isMobile: false,
   //顶部
   headerSetting: {
     //背景色
-    bgColor: '#fff',
+    bgColor: 'transparent',
     //固定顶部
     fixed: true,
     //显示重载按钮
@@ -19,7 +19,7 @@ const setting = {
   //多标签
   multiTabsSetting: {
     //背景色
-    bgColor: '#fff',
+    bgColor: 'transparent',
     //是否显示
     show: true,
     //固定多标签
@@ -30,7 +30,7 @@ const setting = {
     //最小宽度
     minMenuWidth: 64,
     //菜单宽度
-    menuWidth: 200,
+    menuWidth: 220,
     //固定菜单
     fixed: true,
     //分割菜单

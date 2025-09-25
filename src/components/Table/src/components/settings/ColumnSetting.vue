@@ -17,7 +17,7 @@
                 <n-checkbox v-model:checked="selection" @update:checked="onSelection"
                   >勾选列</n-checkbox
                 >
-                <n-button text type="info" size="small" class="mt-1" @click="resetColumns"
+                <n-button text size="small" class="mt-1" @click="resetColumns"
                   >重置</n-button
                 >
               </n-space>
@@ -51,7 +51,7 @@
                     </span>
                     <n-checkbox :value="element.key" :label="element.title" />
                     <div class="fixed-item">
-                      <n-tooltip trigger="hover" placement="bottom">
+                      <!-- <n-tooltip trigger="hover" placement="bottom">
                         <template #trigger>
                           <n-icon
                             size="18"
@@ -63,8 +63,8 @@
                           </n-icon>
                         </template>
                         <span>固定到左侧</span>
-                      </n-tooltip>
-                      <n-divider vertical />
+                      </n-tooltip> -->
+                      <!-- <n-divider vertical /> -->
                       <n-tooltip trigger="hover" placement="bottom">
                         <template #trigger>
                           <n-icon
@@ -126,7 +126,7 @@
       const cacheColumnsList = ref<Options[]>([]);
 
       const state = reactive({
-        selection: false,
+        selection: true,
         checkAll: true,
         checkList: [],
         defaultCheckList: [],
@@ -274,7 +274,7 @@
         cursor: pointer;
 
         :hover {
-          color: #1890ff;
+          color: var(--primary);
         }
       }
     }

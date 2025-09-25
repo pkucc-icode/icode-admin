@@ -35,14 +35,21 @@
               <div
                 :id="`tag${element.fullPath.split('/').join('\/')}`"
                 class="tabs-card-scroll-item"
-                :class="{ 'active-item': activeKey === element.fullPath }"
+                :class="{ 
+                  'active-item': activeKey === element.fullPath,
+                  'dark': getDarkTheme
+                }"
                 @click.stop="goPage(element)"
                 @contextmenu="handleContextMenu($event, element)"
               >
-                <span>{{ element.meta.title }}</span>
-                <n-icon size="14" @click.stop="closeTabItem(element)" v-if="!element.meta.affix">
-                  <CloseOutlined />
-                </n-icon>
+                <div class="flex items-center justify-between gap-0.5">
+                  <Tooltip :content="element.meta.title" class="flex-1 font-semibold">
+                    {{ element.meta.title }}
+                  </Tooltip>
+                  <n-icon size="14" @click.stop="closeTabItem(element)" v-if="!element.meta.affix">
+                    <CloseOutlined />
+                  </n-icon>                
+                </div>
               </div>
             </template>
           </Draggable>
@@ -112,6 +119,7 @@
   import { useProjectSettingStore } from '@/store/modules/projectSetting';
   import { useThemeVars } from 'naive-ui';
   import { useGo } from '@/hooks/web/usePage';
+  import { Tooltip } from '@/components/Tooltip';
 
   export default defineComponent({
     name: 'TabsView',
@@ -185,8 +193,8 @@
           navMode.value === 'horizontal' || !isMixMenuNoneSub.value
             ? '0px'
             : collapsed
-            ? `${minMenuWidth}px`
-            : `${menuWidth}px`;
+            ? `${minMenuWidth + 40}px`
+            : `${menuWidth + 40}px`;
 
         if (isMobile.value) {
           return {
@@ -196,7 +204,8 @@
         }
         return {
           left: lenNum,
-          width: `calc(100% - ${!fixed ? '0px' : lenNum})`,
+          // left: 0,
+          width: `calc(100% - 16px - ${!fixed ? '0px' : lenNum})`,
         };
       });
 
@@ -253,20 +262,20 @@
       tabsViewStore.initTabs(cacheRoutes);
 
       //监听滚动条
-      function onScroll(e) {
-        let scrollTop =
-          e.target.scrollTop ||
-          document.documentElement.scrollTop ||
-          window.pageYOffset ||
-          document.body.scrollTop; // 滚动条偏移量
-        state.isMultiHeaderFixed = !!(
-          !headerSetting.value.fixed &&
-          multiTabsSetting.value.fixed &&
-          scrollTop >= 64
-        );
-      }
+      // function onScroll(e) {
+      //   let scrollTop =
+      //     e.target.scrollTop ||
+      //     document.documentElement.scrollTop ||
+      //     window.pageYOffset ||
+      //     document.body.scrollTop; // 滚动条偏移量
+      //   state.isMultiHeaderFixed = !!(
+      //     !headerSetting.value.fixed &&
+      //     multiTabsSetting.value.fixed &&
+      //     scrollTop >= 64
+      //   );
+      // }
 
-      window.addEventListener('scroll', onScroll, true);
+      // window.addEventListener('scroll', onScroll, true);
 
       // 移除缓存组件名称
       const delKeepAliveCompName = () => {
@@ -526,12 +535,11 @@
 <style lang="less" scoped>
   .tabs-view {
     width: 100%;
-    padding: 6px 0;
     display: flex;
     transition: all 0.2s ease-in-out;
-
+    
     &-main {
-      height: 32px;
+      height: 2.6rem;
       display: flex;
       max-width: 100%;
       min-width: 100%;
@@ -545,18 +553,18 @@
 
         .tabs-card-prev,
         .tabs-card-next {
-          width: 32px;
+          width: 2.5rem;
           text-align: center;
           position: absolute;
-          line-height: 32px;
+          line-height: 2.5rem;
           cursor: pointer;
 
           .n-icon {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 32px;
-            width: 32px;
+            height: 2.5rem;
+            width: 2.5rem;
           }
         }
 
@@ -578,63 +586,88 @@
           overflow: hidden;
 
           &-item {
-            background: v-bind(getCardColor);
-            color: v-bind(getBaseColor);
-            height: 32px;
-            padding: 6px 16px 4px;
-            border-radius: 3px;
-            margin-right: 6px;
+            color: #000000;
+            background: #FFFFFF; 
+            height: 2.5rem;
+            width: 120px;
+            padding: 10px 16px 4px;
+            border-radius: 20px;
+            margin-right: 8px;
             cursor: pointer;
             display: inline-block;
             position: relative;
             flex: 0 0 auto;
-
-            span {
-              float: left;
-              vertical-align: middle;
-            }
+            box-shadow: 0 2px 2px #D6E1C840;
+            // span {
+            //   float: left;
+            //   vertical-align: middle;
+            // }
 
             &:hover {
               color: #515a6e;
             }
 
             .n-icon {
-              height: 22px;
-              width: 21px;
+              height: 20px;
+              width: 20px;
               margin-right: -6px;
               position: relative;
               vertical-align: middle;
               text-align: center;
-              color: #808695;
+              color: #fff !important;
+              background: var(--decoration);
+              border-radius: 50%;
 
-              &:hover {
-                color: #515a6e !important;
-              }
+              // &:hover {
+              //   color: #fff !important;
+              //   background: #A6B6DE;
+              // }
 
               svg {
-                height: 21px;
+                height: 20px;
                 display: inline-block;
               }
             }
           }
 
           .active-item {
-            color: v-bind(getAppTheme);
+            color: #FFFFFF;
+            background: #292929;
+          }
+
+          // Dark mode styles
+          .dark &-item {
+            color: #ffffff;
+            background: #292929;
+            box-shadow: 0 2px 2px #1b1b1b40;
+
+            &:hover {
+              color: #e0e0e0;
+            }
+
+            .n-icon {
+              background: var(--decoration);
+            }
+          }
+
+          .dark &-item.active-item {
+            color: #292929;
+            background: #FFFFFF !important;
           }
         }
       }
 
       .tabs-card-scrollable {
-        padding: 0 32px;
+        padding: 0 2.5rem;
         overflow: hidden;
       }
     }
 
     .tabs-close {
-      min-width: 32px;
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
+      min-width: 2.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
       text-align: center;
       background: var(--color);
       border-radius: 2px;
@@ -650,22 +683,23 @@
     }
   }
 
-  .tabs-view-default-background {
-    background: #f5f7f9;
-  }
+  // .tabs-view-default-background {
+  //   background: var(--accent-foreground);
+  // }
 
-  .tabs-view-dark-background {
-    background: #101014;
-  }
+  // .tabs-view-dark-background {
+  //   background: var(--accent-foreground);
+  // }
 
   .tabs-view-fix {
     position: fixed;
     z-index: 5;
-    padding: 6px 10px 6px 10px;
-    left: 200px;
+    top: 96px;
   }
 
-  .tabs-view-fixed-header {
-    top: 0;
-  }
+  // .tabs-view-fixed-header {
+    
+  // }
+
+  
 </style>

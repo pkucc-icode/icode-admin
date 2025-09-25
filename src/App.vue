@@ -48,12 +48,17 @@
       LoadingBar: {
         colorLoading: appTheme,
       },
+      Modal: {
+        borderRadius: '70px',
+        color: 'var(--card)',
+        textColor: 'var(--foreground)',
+      }
     };
   });
 
   const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : undefined));
 
-  let timer: NodeJS.Timer;
+  let timer: NodeJS.Timeout;
 
   const timekeeping = () => {
     clearInterval(timer);
@@ -75,6 +80,12 @@
 
   onMounted(() => {
     document.addEventListener('mousedown', timekeeping);
+    // 初始化时设置正确的 dark 类
+    if (designStore.darkTheme) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   });
 
   onUnmounted(() => {

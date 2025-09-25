@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="工作台">
+      <Card>
         <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen">
           <n-gi>
             <div class="flex items-center">
@@ -31,11 +31,11 @@
             </div>
           </n-gi>
         </n-grid>
-      </n-card>
+      </Card>
     </div>
     <n-grid class="mt-4" cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="12" :y-gap="9">
       <n-gi>
-        <n-card
+        <Card
           :segmented="{ content: true }"
           content-style="padding: 0;"
           :bordered="false"
@@ -43,11 +43,7 @@
           title="项目"
         >
           <div class="flex flex-wrap project-card">
-            <n-card
-              size="small"
-              class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
-              hoverable
-            >
+            <Card>
               <div class="flex">
                 <span>
                   <n-icon size="30">
@@ -60,8 +56,8 @@
                 是一个面向开源及私有软件项目的托管平台。
               </div>
               <div class="flex h-10 mt-2 text-gray-400"> 开源君，2021-07-04 </div>
-            </n-card>
-            <n-card
+            </Card>
+            <Card
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -76,8 +72,8 @@
               </div>
               <div class="flex h-10 mt-2 text-gray-400"> 渐进式 JavaScript 框架 </div>
               <div class="flex h-10 mt-2 text-gray-400"> 学不动也要学，2021-07-04 </div>
-            </n-card>
-            <n-card
+            </Card>
+            <Card
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -92,8 +88,8 @@
               </div>
               <div class="flex h-10 mt-2 text-gray-400"> HTML5是互联网的下一代标准。 </div>
               <div class="flex h-10 mt-2 text-gray-400"> 撸码也是一种艺术 2021-04-01 </div>
-            </n-card>
-            <n-card
+            </Card>
+            <Card
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -108,8 +104,8 @@
               </div>
               <div class="flex h-10 mt-2 text-gray-400"> 现代 Web 开发平台，百万粉丝热捧。 </div>
               <div class="flex h-10 mt-2 text-gray-400"> 铁粉君 2021-07-04。 </div>
-            </n-card>
-            <n-card
+            </Card>
+            <Card
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -124,8 +120,8 @@
               </div>
               <div class="flex h-10 mt-2 text-gray-400"> 用于构建用户界面的 JavaScript 库。 </div>
               <div class="flex h-10 mt-2 text-gray-400"> 技术牛 2021-07-04。 </div>
-            </n-card>
-            <n-card
+            </Card>
+            <Card
               size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
               hoverable
@@ -140,11 +136,11 @@
               </div>
               <div class="flex h-10 mt-2 text-gray-400"> 路是走出来的，而不是空想出来的。 </div>
               <div class="flex h-10 mt-2 text-gray-400"> 架构组 2021-07-04 </div>
-            </n-card>
+            </Card>
           </div>
-        </n-card>
+        </Card>
 
-        <n-card
+        <Card
           :segmented="{ content: true }"
           content-style="padding-top: 0;padding-bottom: 0;"
           :bordered="false"
@@ -217,10 +213,10 @@
               </n-thing>
             </n-list-item>
           </n-list>
-        </n-card>
+        </Card>
       </n-gi>
       <n-gi>
-        <n-card
+        <Card
           :segmented="{ content: true }"
           content-style="padding: 0;"
           :bordered="false"
@@ -228,7 +224,7 @@
           title="快捷操作"
         >
           <div class="flex flex-wrap project-card">
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            <Card size="small" class="cursor-pointer project-card-item" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#68c755">
@@ -237,8 +233,8 @@
                 </span>
                 <span class="text-center text-lx">主控台</span>
               </div>
-            </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            </Card>
+            <Card size="small" class="cursor-pointer project-card-item" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#fab251">
@@ -247,8 +243,8 @@
                 </span>
                 <span class="text-center text-lx">列表</span>
               </div>
-            </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            </Card>
+            <Card size="small" class="cursor-pointer project-card-item" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#1890ff">
@@ -257,8 +253,8 @@
                 </span>
                 <span class="text-center text-lx">表单</span>
               </div>
-            </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            </Card>
+            <Card size="small" class="cursor-pointer project-card-item" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#f06b96">
@@ -267,8 +263,8 @@
                 </span>
                 <span class="text-center text-lx">权限管理</span>
               </div>
-            </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            </Card>
+            <Card size="small" class="cursor-pointer project-card-item" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="#7238d1">
@@ -277,8 +273,8 @@
                 </span>
                 <span class="text-center text-lx">系统管理</span>
               </div>
-            </n-card>
-            <n-card size="small" class="cursor-pointer project-card-item" hoverable>
+            </Card>
+            <Card size="small" class="cursor-pointer project-card-item" hoverable>
               <div class="flex flex-col justify-center text-gray-500">
                 <span class="text-center">
                   <n-icon size="30" color="">
@@ -287,12 +283,12 @@
                 </span>
                 <span class="text-center text-lx">主控台</span>
               </div>
-            </n-card>
+            </Card>
           </div>
-        </n-card>
-        <n-card :segmented="{ content: true }" :bordered="false" size="small" class="mt-4">
+        </Card>
+        <Card :segmented="{ content: true }" :bordered="false" size="small" class="mt-4">
           <img src="~@/assets/images/Business.svg" class="w-full" />
-        </n-card>
+        </Card>
       </n-gi>
     </n-grid>
   </div>
@@ -314,6 +310,7 @@
     Html5Outlined,
   } from '@vicons/antd';
   import { LogoVue, LogoAngular, LogoReact, LogoJavascript } from '@vicons/ionicons5';
+  import { Card } from '@/components/Card';
 </script>
 
 <style lang="less" scoped>

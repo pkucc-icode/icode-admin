@@ -19,11 +19,10 @@
     </div>
 
     <div class="flex items-center leading-none table-toolbar-right">
-      <!--顶部右侧区域-->
       <slot name="toolbar"></slot>
 
       <!--斑马纹-->
-      <n-tooltip trigger="hover">
+      <!-- <n-tooltip trigger="hover">
         <template #trigger>
           <div class="mr-2 table-toolbar-right-icon">
             <n-switch v-model:value="isStriped" @update:value="setStriped" />
@@ -31,10 +30,10 @@
         </template>
         <span>表格斑马纹</span>
       </n-tooltip>
-      <n-divider vertical />
+      <n-divider vertical /> -->
 
       <!--刷新-->
-      <n-tooltip trigger="hover">
+      <!-- <n-tooltip trigger="hover">
         <template #trigger>
           <div class="table-toolbar-right-icon" @click="reload">
             <n-icon size="18">
@@ -43,10 +42,10 @@
           </div>
         </template>
         <span>刷新</span>
-      </n-tooltip>
+      </n-tooltip> -->
 
       <!--密度-->
-      <n-tooltip trigger="hover">
+      <!-- <n-tooltip trigger="hover">
         <template #trigger>
           <div class="table-toolbar-right-icon">
             <n-dropdown
@@ -62,20 +61,21 @@
           </div>
         </template>
         <span>密度</span>
-      </n-tooltip>
+      </n-tooltip> -->
 
       <!--表格设置单独抽离成组件-->
       <ColumnSetting />
-    </div>
+    </div> 
   </div>
   <div class="s-table">
     <n-data-table
       ref="tableElRef"
       v-bind="getBindValues"
-      :striped="isStriped"
+      :striped="false"
       :pagination="pagination"
       @update:page="updatePage"
       @update:page-size="updatePageSize"
+      bordered
     >
       <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
         <slot :name="item" v-bind="data"></slot>
@@ -86,7 +86,7 @@
 
 <script lang="ts" setup>
   import { ref, unref, toRaw, computed, onMounted, nextTick } from 'vue';
-  import { ReloadOutlined, ColumnHeightOutlined, QuestionCircleOutlined } from '@vicons/antd';
+  import { QuestionCircleOutlined } from '@vicons/antd';
   import { createTableContext } from './hooks/useTableContext';
 
   import ColumnSetting from './components/settings/ColumnSetting.vue';
@@ -104,23 +104,11 @@
   import { useWindowSizeFn } from '@/hooks/event/useWindowSizeFn';
   import { isBoolean } from '@/utils/is';
 
-  const densityOptions = [
-    {
-      type: 'menu',
-      label: '紧凑',
-      key: 'small',
-    },
-    {
-      type: 'menu',
-      label: '默认',
-      key: 'medium',
-    },
-    {
-      type: 'menu',
-      label: '宽松',
-      key: 'large',
-    },
-  ];
+  // const densityOptions = [
+  //   { type: 'menu', label: '紧凑', key: 'small' },
+  //   { type: 'menu', label: '默认', key: 'medium' },
+  //   { type: 'menu', label: '宽松', key: 'large' },
+  // ];
 
   const emit = defineEmits([
     'fetch-success',
@@ -137,7 +125,7 @@
   const tableElRef = ref<ComponentRef>(null);
   const wrapRef = ref<Nullable<HTMLDivElement>>(null);
   let paginationEl: HTMLElement | null;
-  const isStriped = ref(props.striped || false);
+  // const isStriped = ref(props.striped || false);
   const tableData = ref<Recordable[]>([]);
   const innerPropsRef = ref<Partial<BasicTableProps>>();
 
@@ -178,9 +166,9 @@
   }
 
   //密度切换
-  function densitySelect(e) {
-    tableSize.value = e;
-  }
+  // function densitySelect(e) {
+  //   tableSize.value = e;
+  // }
 
   //获取表格大小
   const getTableSize = computed(() => tableSize.value);
@@ -188,7 +176,8 @@
   //组装表格信息
   const getBindValues = computed(() => {
     const tableData = unref(getDataSourceRef);
-    const maxHeight = tableData.length ? `${unref(deviceHeight)}px` : 'auto';
+    // const maxHeight = tableData.length ? `${unref(deviceHeight)}px` : 'auto';
+    
     return {
       ...unref(getProps),
       loading: unref(getLoading),
@@ -197,7 +186,7 @@
       data: tableData,
       size: unref(getTableSize),
       remote: true,
-      'max-height': maxHeight,
+      // 'max-height': maxHeight,
       title: '', // 重置为空 避免绑定到 table 上面
     };
   });
@@ -209,7 +198,7 @@
     innerPropsRef.value = { ...unref(innerPropsRef), ...props };
   }
 
-  const setStriped = (value: boolean) => (isStriped.value = value);
+  // const setStriped = (value: boolean) => (isStriped.value = value);
 
   const tableAction = {
     reload,
@@ -271,7 +260,7 @@
   .table-toolbar {
     display: flex;
     justify-content: space-between;
-    padding: 0 0 16px 0;
+    // padding: 0 0 16px 0;
 
     &-left {
       display: flex;
@@ -309,4 +298,96 @@
   .table-toolbar-inner-popover-title {
     padding: 2px 0;
   }
+
+/* NDataTable style hooks - override freely where needed */
+:deep(.n-data-table) {
+
+  .n-data-table-wrapper{
+    border-top-color: transparent !important;  
+    border-left-color: transparent !important; 
+    border-right-color: transparent !important;
+    border-bottom-color: var(--decoration) !important;     
+  }
+  
+  .n-data-table-table {
+    background-color: transparent;
+  }
+
+  /* header */
+  .n-data-table-thead {
+    .n-data-table-th { 
+      background: var(--secondary);
+
+      .n-data-table-resize-button::after {
+        background-color: var(--decoration);
+      }
+    }
+    .n-data-table-th--sortable:hover{
+      background: var(--secondary);
+    }
+    .n-data-table-th__title { 
+      color: var(--secondary-foreground);
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  .n-data-table-tbody {
+    /* 表体格子 */
+    .n-data-table-td { 
+      border-bottom-color: var(--decoration); 
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* 表体行hover状态 */
+    .n-data-table-tr:hover, .n-data-table-tr:hover > .n-data-table-td { 
+      background-color: var(--secondary) !important;
+    }
+
+    /* 可排序的表头 */
+    .n-data-table-td, .n-data-table-td.n-data-table-td--sorting {
+      background-color: transparent;
+    } 
+
+    /* 右侧固定的单元格 */
+    .n-data-table-td--fixed-right {
+      background-color: var(--secondary) !important;
+    }    
+  }
+  
+  /* title area */
+  .n-data-table-title { 
+    /* table title wrapper */ 
+    border-bottom-color: inherit; 
+  }
+
+
+  /* pagination */
+  .n-data-table__pagination { 
+    /* pagination wrapper */ 
+    color: inherit; 
+  }
+}
+
+:deep(.n-pagination) {
+  .n-pagination-item {
+    color: var(--text);
+    background-color: var(--secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+  }
+
+  .n-pagination-item:not(.n-pagination-item--disabled):hover {
+    // border-color: var(--primary);
+    background-color: var(--muted);
+    // color: var(--muted-foreground);
+  }
+
+  .n-pagination-item--active, .n-pagination-item--button {
+    color: var(--primary-foreground) !important;
+    background-color: var(--primary) !important;
+  }
+}
 </style>

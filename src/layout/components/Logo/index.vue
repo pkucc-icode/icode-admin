@@ -1,12 +1,13 @@
 <template>
   <div class="logo">
     <img :src="websiteConfig.logo" alt="" :class="{ 'mr-2': !collapsed }" />
-    <h2 v-show="!collapsed" class="title">{{ websiteConfig.title }}</h2>
+    <h2 v-show="!collapsed" class="title" :class="{ 'dark': designStore.darkTheme }">{{ websiteConfig.title }}</h2>
   </div>
 </template>
 
 <script lang="ts">
   import { websiteConfig } from '@/config/website.config';
+  import { useDesignSettingStore } from '@/store/modules/designSetting';
   export default {
     name: 'Index',
     props: {
@@ -17,6 +18,7 @@
     data() {
       return {
         websiteConfig,
+        designStore: useDesignSettingStore(),
       };
     },
   };
@@ -27,8 +29,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 64px;
-    line-height: 64px;
+    height: 96px;
+    line-height: 96px;
     overflow: hidden;
     white-space: nowrap;
 
@@ -38,7 +40,10 @@
     }
 
     .title {
-      margin: 0;
+      margin: 0 8px;
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--accent);
     }
   }
 </style>

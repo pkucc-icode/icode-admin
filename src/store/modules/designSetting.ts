@@ -31,7 +31,19 @@ export const useDesignSettingStore = defineStore({
       return this.appThemeList;
     },
   },
-  actions: {},
+  actions: {
+    setDarkTheme(dark: boolean) {
+      this.darkTheme = dark;
+      // 切换 HTML 元素的 dark 类，让 CSS 变量生效
+      if (typeof document !== 'undefined') {
+        if (dark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+    },
+  },
 });
 
 // Need to be used outside the setup
