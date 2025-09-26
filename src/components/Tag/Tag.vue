@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useDesignSettingStore } from '@/store/modules/designSetting'
 
 // 可以传入type，也可以直接传入color，组件会自动选择合适的字体颜色
@@ -12,81 +12,78 @@ const props = defineProps<TagProps>()
 const designStore = useDesignSettingStore()
 
 // 内置状态颜色（light 模式基色）
-const presetMap: Record<'success' | 'info' | 'warning' | 'error', string> = {
+const presetMap = {
   success: '#4FBE97',
   info: '#2176AB',
   warning: '#DEb05A',
   error: '#BD1714'
-}
+} as const
 
-// 自动计算变暗的颜色
-function darkenColor(color: string, factor: number = 0.9): string {
-  const rgb = parseColorToRgb(color)
-  if (!rgb) return color
-  
-  return `rgb(${Math.round(rgb.r * factor)}, ${Math.round(rgb.g * factor)}, ${Math.round(rgb.b * factor)})`
-}
+// 缓存解析结果，避免重复计算
+const colorCache = ref<Record<string, { r: number; g: number; b: number } | null>>({})
+const cssVariableCache = ref<Record<string, string>>({})
 
-const chosenColor = computed(() => {
-  let baseColor: string | undefined
-  
-  if (props.color) {
-    baseColor = props.color
-  } else if (props.type === 'default') {
-    baseColor = 'var(--primary)'
-  } else if (props.type) {
-    baseColor = presetMap[props.type]
-  }
-  
-  if (!baseColor) return undefined
-  
-  // dark 模式下自动变暗
-  if (designStore.darkTheme) {
-    return darkenColor(baseColor, 0.6)
-  }
-  
-  return baseColor
-})
+// 预编译正则表达式，避免重复创建
+const VAR_REGEX = /var\(--([^)]+)\)/
+const HEX_REGEX = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/
+const RGB_REGEX = /^rgba?\(([^)]+)\)$/
 
-/** 工具函数：获取 CSS 变量的实际值 */
+/** 工具函数：获取 CSS 变量的实际值（带缓存） */
 function getCSSVariableValue(variable: string): string | null {
   if (typeof window === 'undefined') return null
-  return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
+  
+  if (cssVariableCache.value[variable]) {
+    return cssVariableCache.value[variable]
+  }
+  
+  const value = getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
+  cssVariableCache.value[variable] = value
+  return value
 }
 
-/** 工具函数：解析 hex/rgb 字符串为 RGB 对象 */
+/** 工具函数：解析 hex/rgb 字符串为 RGB 对象（带缓存） */
 function parseColorToRgb(color: string): { r: number; g: number; b: number } | null {
   if (!color) return null
   
+  // 检查缓存
+  if (colorCache.value[color]) {
+    return colorCache.value[color]
+  }
+  
+  let result: { r: number; g: number; b: number } | null = null
+  
   // 处理 CSS 变量
   if (color.startsWith('var(')) {
-    const varName = color.match(/var\(--([^)]+)\)/)?.[1]
+    const varName = color.match(VAR_REGEX)?.[1]
     if (varName) {
       const actualColor = getCSSVariableValue(`--${varName}`)
       if (actualColor) {
-        return parseColorToRgb(actualColor)
+        result = parseColorToRgb(actualColor)
       }
     }
-    return null
+  } else {
+    const hexMatch = color.trim().match(HEX_REGEX)
+    if (hexMatch) {
+      let hex = hexMatch[1]
+      if (hex.length === 3) {
+        hex = hex.split('').map(c => c + c).join('')
+      }
+      const num = parseInt(hex, 16)
+      result = { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 }
+    } else {
+      const rgbMatch = color.trim().match(RGB_REGEX)
+      if (rgbMatch) {
+        const parts = rgbMatch[1].split(',').map(v => Number(v.trim()))
+        if (parts.length >= 3) {
+          result = { r: parts[0], g: parts[1], b: parts[2] }
+        }
+      }
+    }
   }
   
-  const hexMatch = color.trim().match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/)
-  if (hexMatch) {
-    let hex = hexMatch[1]
-    if (hex.length === 3) {
-      hex = hex.split('').map(c => c + c).join('')
-    }
-    const num = parseInt(hex, 16)
-    return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 }
-  }
-  const rgbMatch = color.trim().match(/^rgba?\(([^)]+)\)$/)
-  if (rgbMatch) {
-    const parts = rgbMatch[1].split(',').map(v => Number(v.trim()))
-    if (parts.length >= 3) {
-      return { r: parts[0], g: parts[1], b: parts[2] }
-    }
-  }
-  return null
+  // 缓存结果
+  colorCache.value[color] = result
+  return result
 }
 
 /** 工具函数：计算相对亮度 (WCAG 定义) */
@@ -103,9 +100,37 @@ function autoTextColor(bg: string): string {
   const rgb = parseColorToRgb(bg)
   if (!rgb) return 'white'
   const luminance = getRelativeLuminance(rgb)
-  // 阈值可调整，一般 0.5 左右，越小表示越容易选黑色
   return luminance > 0.5 ? 'black' : 'white'
 }
+
+// 自动计算变暗的颜色
+function darkenColor(color: string, factor: number = 0.6): string {
+  const rgb = parseColorToRgb(color)
+  if (!rgb) return color
+  
+  return `rgb(${Math.round(rgb.r * factor)}, ${Math.round(rgb.g * factor)}, ${Math.round(rgb.b * factor)})`
+}
+
+const chosenColor = computed(() => {
+  let baseColor: string | undefined
+  
+  if (props.color) {
+    baseColor = props.color
+  } else if (props.type === 'default') {
+    baseColor = 'var(--primary)'
+  } else if (props.type && props.type in presetMap) {
+    baseColor = presetMap[props.type]
+  }
+  
+  if (!baseColor) return undefined
+  
+  // dark 模式下自动变暗
+  if (designStore.darkTheme) {
+    return darkenColor(baseColor, 0.6)
+  }
+  
+  return baseColor
+})
 
 const tagStyle = computed(() => {
   if (!chosenColor.value) {
@@ -129,3 +154,4 @@ const tagStyle = computed(() => {
     <slot />
   </n-tag>
 </template>
+

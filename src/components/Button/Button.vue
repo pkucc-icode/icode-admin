@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDesignSettingStore } from '@/store/modules/designSetting'
-import { computed, nextTick, watch } from 'vue'
+import { computed, ref } from 'vue'
 
 interface ButtonProps {
   type?: 'default' | 'primary' | 'info' | 'success' | 'warning' | 'error'
@@ -23,77 +23,66 @@ const emit = defineEmits<{
   (e: 'click', evt: MouseEvent): void
 }>()
 
-// 获取 CSS 变量值的函数
+const designStore = useDesignSettingStore()
+
+// 缓存 CSS 变量值，避免重复计算
+const cssVariableCache = ref<Record<string, string>>({})
+
+// 获取 CSS 变量值的函数（带缓存）
 const getCSSVariableValue = (variableName: string): string => {
-  if (typeof window !== 'undefined') {
-    const value = getComputedStyle(document.documentElement)
-      .getPropertyValue(variableName)
-      .trim()
-    return value
+  if (typeof window === 'undefined') return ''
+  
+  if (cssVariableCache.value[variableName]) {
+    return cssVariableCache.value[variableName]
   }
-  return ''
+  
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(variableName)
+    .trim()
+  
+  cssVariableCache.value[variableName] = value
+  return value
 }
+
+// 预定义颜色映射，避免重复的 switch 判断
+const colorTypeMap = {
+  primary: '--primary',
+  info: '--info', 
+  success: '--success',
+  warning: '--warning',
+  error: '--error'
+} as const
+
+// 预定义需要设置白色字体的类型
+const coloredTypes = ['primary', 'info', 'success', 'warning', 'error'] as const
 
 // 计算属性，使用 tailwind.css 中定义的 CSS 变量
 const buttonProps = computed(() => {
   const { icon, ...rest } = props
   
-  // 添加对 darkTheme 的依赖，确保主题切换时重新计算
-  const _ = designStore.darkTheme
-  
   // 如果没有手动传 color，根据 type 设置 tailwind.css 中的颜色
-  if (!rest.color) {
-    switch (rest.type) {
-      case 'primary':
-        rest.color = getCSSVariableValue('--primary')
-        break
-      case 'info':
-        rest.color = getCSSVariableValue('--info')
-        break
-      case 'success':
-        rest.color = getCSSVariableValue('--success')
-        break
-      case 'warning':
-        rest.color = getCSSVariableValue('--warning')
-        break
-      case 'error':
-        rest.color = getCSSVariableValue('--error')
-        break
-      default:
-        // 默认按钮不设置 color，让 Naive UI 使用默认样式
-        break
-    }
+  if (!rest.color && rest.type && rest.type in colorTypeMap) {
+    rest.color = getCSSVariableValue(colorTypeMap[rest.type as keyof typeof colorTypeMap])
+  }
+  
+  // 对于有颜色的按钮，在暗色主题下强制设置白色字体（排除 ghost 类型）
+  if (rest.color && rest.type && coloredTypes.includes(rest.type as any) && !rest.ghost && designStore.darkTheme) {
+    rest.textColor = 'white'
   }
   
   return rest
 })
 
-// 计算按钮的 class
+// 计算按钮的 class（优化字符串拼接）
 const buttonClass = computed(() => {
   const classes = ['naive-button-override']
   
-  if (designStore.darkTheme) {
-    classes.push('dark')
-  }
-  
-  if (props.round) {
-    classes.push('round')
-  }
-  
-  if (props.circle) {
-    classes.push('circle')
-  }
+  if (designStore.darkTheme) classes.push('dark')
+  if (props.round) classes.push('round')
+  if (props.circle) classes.push('circle')
   
   return classes.join(' ')
 })
-
-const designStore = useDesignSettingStore()
-
-// 监听主题变化，确保切换时重新获取 CSS 变量值
-watch(() => designStore.darkTheme, async () => {
-  // 延迟一点时间确保 CSS 变量已经更新
-  await nextTick();
-}, { flush: 'post' })
 </script>
 
 <template>
