@@ -98,7 +98,18 @@
           <span>全屏</span>
         </n-tooltip>
       </div> -->
-      <!-- 个人中心 -->
+      <!-- 明暗主题切换 -->
+      <div class="layout-header-trigger layout-header-trigger-min">
+        <n-tooltip placement="bottom-end">
+          <template #trigger>
+            <n-icon size="18" style="font-weight: bold" @click="toggleDarkTheme">
+              <MoonOutline v-if="!designStore.darkTheme" />
+              <SunnyOutline v-else />
+            </n-icon>
+          </template>
+          <span>{{ designStore.darkTheme ? '切换到浅色' : '切换到深色' }}主题</span>
+        </n-tooltip>
+      </div>
       <div class="layout-header-trigger layout-header-trigger-min h-[32px]">
         <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
           <div class="avatar">
@@ -113,16 +124,16 @@
         </n-dropdown>
       </div>
       <!--设置-->
-      <div class="layout-header-trigger layout-header-trigger-min" @click="openSetting">
+      <!-- <div class="layout-header-trigger layout-header-trigger-min">
         <n-tooltip placement="bottom-end">
           <template #trigger>
-            <n-icon size="18" style="font-weight: bold">
+            <n-icon size="18" style="font-weight: bold" @click="openSetting">
               <SettingOutlined />
             </n-icon>
           </template>
           <span>项目配置</span>
         </n-tooltip>
-      </div>
+      </div> -->
     </div>
   </div>
   <!--项目配置-->
@@ -134,7 +145,7 @@
   import { useProjectSetting } from '@/hooks/setting/useProjectSetting';
   import { AsideMenu } from '@/layout/components/Menu';
   import { RedirectName } from '@/router/constant';
-  import { useScreenLockStore } from '@/store/modules/screenLock';
+  // import { useScreenLockStore } from '@/store/modules/screenLock';
   import { useUserStore } from '@/store/modules/user';
   import { TABS_ROUTES } from '@/store/mutation-types';
   import { NDialogProvider, useDialog, useMessage } from 'naive-ui';
@@ -143,6 +154,7 @@
   import components from './components';
   import ProjectSetting from './ProjectSetting.vue';
   import { SearchInput } from '@/components/Search';
+  import { useDesignSettingStore } from '@/store/modules/designSetting';
 
   export default defineComponent({
     name: 'PageHeader',
@@ -158,7 +170,8 @@
     emits: ['update:collapsed'],
     setup(props, { emit }) {
       const userStore = useUserStore();
-      const useLockscreen = useScreenLockStore();
+      // const useLockscreen = useScreenLockStore();
+      const designStore = useDesignSettingStore();
       const message = useMessage();
       const dialog = useDialog();
       const { navMode, navTheme, headerSetting, menuSetting, crumbsSetting } = useProjectSetting();
@@ -279,24 +292,24 @@
 
       // 图标列表
       const iconList = [
-        {
-          icon: 'SearchOutlined',
-          tips: '搜索',
-        },
-        {
-          icon: 'GithubOutlined',
-          tips: 'github',
-          eventObject: {
-            click: () => window.open('https://github.com/jekip/naive-ui-admin'),
-          },
-        },
-        {
-          icon: 'LockOutlined',
-          tips: '锁屏',
-          eventObject: {
-            click: () => useLockscreen.setLock(true),
-          },
-        },
+        // {
+        //   icon: 'SearchOutlined',
+        //   tips: '搜索',
+        // },
+        // {
+        //   icon: 'GithubOutlined',
+        //   tips: 'github',
+        //   eventObject: {
+        //     click: () => window.open('https://github.com/jekip/naive-ui-admin'),
+        //   },
+        // },
+        // {
+        //   icon: 'LockOutlined',
+        //   tips: '锁屏',
+        //   eventObject: {
+        //     click: () => useLockscreen.setLock(true),
+        //   },
+        // },
       ];
       const avatarOptions = [
         {
@@ -330,6 +343,11 @@
         emit('update:collapsed', !props.collapsed);
       }
 
+      // 切换明暗主题
+      function toggleDarkTheme() {
+        designStore.setDarkTheme(!designStore.darkTheme);
+      }
+
       return {
         ...toRefs(state),
         iconList,
@@ -347,8 +365,10 @@
         getInverted,
         getMenuLocation,
         mixMenu,
+        designStore,
         websiteConfig,
         handleMenuCollapsed,
+        toggleDarkTheme,
         RedirectName,
       };
     },
@@ -438,9 +458,9 @@
         line-height: 48px;
       }
 
-      &:hover {
-        background: hsla(0, 0%, 100%, 0.08);
-      }
+      // &:hover {
+      //   background: hsla(0, 0%, 100%, 0.08);
+      // }
 
       .anticon {
         font-size: 16px;
@@ -468,11 +488,11 @@
       }
     }
 
-    .layout-header-trigger {
-      &:hover {
-        background: #f8f8f9;
-      }
-    }
+    // .layout-header-trigger {
+    //   &:hover {
+    //     background: #f8f8f9;
+    //   }
+    // }
   }
 
   .layout-header-fix {
@@ -481,6 +501,55 @@
     right: 0;
     left: 200px;
     z-index: 11;
+  }
+
+  .dark-switch .n-switch {
+    ::v-deep(.n-switch__rail) {
+      background-color: #000e1c;
+    }
+  }
+  .setting-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    flex-wrap: wrap;
+
+    &-style {
+      display: inline-block;
+      position: relative;
+      margin-right: 16px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    &-title {
+      flex: 1 1;
+      font-size: 14px;
+    }
+
+    &-action {
+      flex: 0 0 auto;
+    }
+
+    &-select {
+      flex: 1;
+    }
+
+    .theme-item {
+      width: 20px;
+      min-width: 20px;
+      height: 20px;
+      cursor: pointer;
+      border: 1px solid #eee;
+      border-radius: 2px;
+      margin: 0 5px 5px 0;
+      text-align: center;
+      line-height: 14px;
+
+      .n-icon {
+        color: #fff;
+      }
+    }
   }
 
   //::v-deep(.menu-router-link) {
