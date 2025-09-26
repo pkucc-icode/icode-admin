@@ -15,16 +15,17 @@ src\styles\index.less可以自定义全局外观class
 
 ### 自封装组件
 components里有二次封装的组件，后续的自封装组件都放这里，优先用native-ui，功能全。有样式要求可以单独把shadcn-cn的源码拿过来改（它本身就是对reka-ui的二次封装）。这两个基本够用。
-以下组件可优先使用二次封装：
+以下组件可优先使用：
 - Modal（native-ui）,
 - ScrollArea, 滚动条（shadcn）
 - Card, 易于扩展的卡片（shadcn）
-- Search, 一个美观的搜索框
+- Search, 一个html原生封装的搜索框，易于定制外观
 - SvgIcon, 方便直接使用svg图标
-- Table, 数据表格，集成分页功能，已覆盖绝大部分样式（native-ui）
+- Table, 数据表格，集成分页功能，已覆盖大部分样式（native-ui）
 - Tooltip, 悬浮文本，自动根据文本省略情况显示，也可指定强制显示（native-ui）
 - Button, 按钮，预设颜色+自定义颜色+暗主题适应+自动字体颜色（native-ui）
 - Tag, 标签，预设颜色+自定义颜色+暗主题适应+自动字体颜色（native-ui）
+- Form， 表单，封印的是native原生的表单组件，必要时可以替换为自己的组件（但是目前只做了Input）
 
 其余时候直接用native-ui的组件即可，因为作者一直在维护更新。
 不在列表的组件暂时不推荐使用（如果你添加了新的组件并测试可用，记得更新上述列表）

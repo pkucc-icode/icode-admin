@@ -28,7 +28,7 @@
             <Select
               placeholder="请选择预约医生"
               :options="doctorList"
-              v-model="formValue.doctor"
+              v-model:value="formValue.doctor"
             />
           </n-form-item>
           <n-form-item label="预约事项" path="matter">

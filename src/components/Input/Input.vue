@@ -1,25 +1,36 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from "vue"
-import { useVModel } from "@vueuse/core"
+import { computed } from 'vue'
 
-const props = defineProps<{
-  defaultValue?: string | number
-  modelValue?: string | number
-  class?: HTMLAttributes["class"]
+const props = withDefaults(defineProps<{
+  // Support both n-input style v-model:value and vanilla v-model
+  value?: string | number | null
+  modelValue?: string | number | null
+}>(), {})
+
+const emit = defineEmits<{
+  (e: 'update:value', v: string | number | null): void
+  (e: 'update:modelValue', v: string | number | null): void
 }>()
 
-const emits = defineEmits<{
-  (e: "update:modelValue", payload: string | number): void
-}>()
+const internalValue = computed(() =>
+  props.modelValue !== undefined ? props.modelValue : props.value
+)
 
-const modelValue = useVModel(props, "modelValue", emits, {
-  passive: true,
-  defaultValue: props.defaultValue,
-})
+function handleUpdate(v: string | number | null) {
+  emit('update:value', v)
+  emit('update:modelValue', v)
+}
 </script>
 
 <template>
-  <input v-model="modelValue" 
-  :class="props.class"
-  class="flex h-9 w-full rounded-md bg-shallow px-2.5 py-1.5 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-shallow-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
+  <n-input
+    v-bind="$attrs"
+    :value="internalValue as any"
+    @update:value="handleUpdate"
+    :theme-overrides="{
+      borderRadius: '1rem',
+      border: 'none',
+      textColor: 'var(--foreground)'
+    }"
+  />
 </template>

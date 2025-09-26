@@ -1,5 +1,5 @@
 <template>
-  <n-modal id="basic-modal" v-bind="getBindValue" v-model:show="isModal" @close="onCloseModal">
+  <n-modal id="basic-modal" v-bind="getBindValue" v-model:show="isModal" @close="onCloseModal" class="rounded-xl">
     <template #header>
       <div class="w-full cursor-move" id="basic-modal-bar">{{ getBindValue.title }}</div>
     </template>
