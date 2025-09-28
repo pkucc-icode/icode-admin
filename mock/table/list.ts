@@ -24,8 +24,24 @@ function tableList(pageSize: number) {
 export default defineMock({
   // 表格数据列表
   '/api/table/list': ({ query }) => {
-    const { page = 1, pageSize = 10, name } = query;
-    const list = tableList(Number(pageSize));
+    const { page = 1, pageSize = 10, name, sort, sortField } = query;
+    let list = tableList(Number(pageSize));
+    
+    // 处理排序
+    if (sort && sortField) {
+      list.sort((a, b) => {
+        const aVal = a[sortField];
+        const bVal = b[sortField];
+        
+        if (sort === 'asc') {
+          return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+        } else if (sort === 'desc') {
+          return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+        }
+        return 0;
+      });
+    }
+    
     // 并非真实，只是为了模拟搜索结果
     const count = name ? 30 : 60;
     return resultSuccess({
