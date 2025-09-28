@@ -106,6 +106,7 @@ export const columns: BasicColumn<ListData>[] = [
     title: '创建时间',
     key: 'createDate',
     resizable: true,
-    sorter: true
+    sorter: true,
+    
   },
 ];

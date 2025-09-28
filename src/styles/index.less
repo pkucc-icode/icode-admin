@@ -14,6 +14,58 @@
 
 /* 深色模式下的 glass-card 覆写 */
 .dark .glass-card {
-    background: #30303028 !important;
-    box-shadow: 0px 4px 4px #33333340;
+    background: #66666628 !important;
+    box-shadow: 0px 4px 4px #11111180;
+}
+
+
+.n-form-item {
+    /* native-ui checkbox */
+    .n-checkbox-box {
+        border-radius: 4px !important;
+    }
+    .n-form-item-label, .n-radio-group, .n-checkbox-group {
+        line-height: 2.5rem !important;
+    }
+    .n-input, .n-input-wrapper, .n-base-selection, .n-base-selection-label, .n-base-selection-tags {
+        border-radius: 0.25rem !important;
+        line-height: 2.5rem !important;
+        min-height: 2.5rem !important;
+        // background-color: transparent !important;
+    }
+
+    .n-input__state-border, .n-base-selection__state-border {
+        border-radius: 0.25rem !important;
+    }
+
+    .n-tag {
+        background-color: var(--muted);
+        color: var(--muted-foreground);
+        border-radius: 0.25rem;
+    }
+    .n-tag__border {
+        border-width: 0 !important;
+    }
+    .n-tag__close {
+        color: var(--muted-foreground);
+        border-radius: 50%;
+    }
+    .n-tag__close:hover.n-tag__close::before {
+        background-color: var(--shallow);
+        color: var(--shallow-foreground);
+    }
+
+    .n-form-item-feedback__line {
+        font-size: 0.75rem;
+    }
+
+    .n-dropdown-menu {
+        border-radius: 0.5rem !important;
+
+        
+    }
+    .n-dropdown-option-body::before {
+        background: var(--muted) !important;
+
+    }
 }

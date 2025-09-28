@@ -64,15 +64,15 @@ function switchType(e) {
 }
 
 .thing-cell-on {
-  background: #f0faff;
-  color: #2d8cf0;
+  background: var(--muted);
+  color: var(--primary);
 
   ::v-deep(.n-thing-main .n-thing-header .n-thing-header__title) {
-    color: #2d8cf0;
+    color: var(--primary);
   }
 
   &:hover {
-    background: #f0faff;
+    background: var(--muted);
   }
 }
 </style>

@@ -121,8 +121,7 @@
           itemColorChildActiveHoverInverted: base.itemColorChildActiveHover,
           itemTextColorChildActiveHoverInverted: base.itemTextColorChildActiveHover,
           itemIconColorChildActiveHoverInverted: base.itemIconColorChildActiveHover,
-
-          // 让箭头颜色与文本颜色保持一致（暗色模式专用键）
+          
           arrowColorInverted: base.itemTextColor,
           arrowColorHoverInverted: base.itemTextColorHover,
           arrowColorActiveInverted: base.itemTextColorActive,

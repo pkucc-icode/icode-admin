@@ -15,8 +15,7 @@
           class="py-8"
         >
           <n-form-item label="预约姓名" path="name">
-            <Input v-model="formValue.name" placeholder="输入姓名" />
-            <!-- <n-input v-model:value="formValue.name" placeholder="输入姓名" /> -->
+            <n-input v-model:value="formValue.name" placeholder="输入姓名" />
           </n-form-item>
           <n-form-item label="预约号码" path="mobile">
             <n-input placeholder="电话号码" v-model:value="formValue.mobile" />
@@ -84,7 +83,6 @@
   import { useMessage } from 'naive-ui';
   import { BasicUpload } from '@/components/Upload';
   import { useGlobSetting } from '@/hooks/setting';
-  import { Input } from '@/components/Input';
   import { Select } from '@/components/Select';
 
   const globSetting = useGlobSetting();

@@ -126,7 +126,7 @@
       const cacheColumnsList = ref<Options[]>([]);
 
       const state = reactive({
-        selection: true,
+        selection: false,
         checkAll: true,
         checkList: [],
         defaultCheckList: [],
@@ -149,6 +149,10 @@
         const checkList: any = columns.map((item) => item.key);
         state.checkList = checkList;
         state.defaultCheckList = checkList;
+        
+        // 检查是否包含selection列
+        state.selection = columns.some(item => item.type === 'selection');
+        
         const newColumns = columns.filter((item) => item.key != 'action' && item.title != '操作');
         if (!columnsList.value.length) {
           columnsList.value = cloneDeep(newColumns);

@@ -302,6 +302,14 @@
 /* NDataTable style hooks - override freely where needed */
 :deep(.n-data-table) {
 
+  .n-checkbox-box {
+      border-radius: 4px !important;
+  }
+  .n-checkbox-box__border{
+      border-color: var(--primary) !important;
+      border-width: 2px !important;
+  }
+
   .n-data-table-wrapper{
     border-top-color: transparent !important;  
     border-left-color: transparent !important; 
