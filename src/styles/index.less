@@ -24,13 +24,13 @@
     .n-checkbox-box {
         border-radius: 4px !important;
     }
-    .n-form-item-label, .n-radio-group, .n-checkbox-group {
-        line-height: 2.5rem !important;
-    }
+    // .n-form-item-label, .n-radio-group, .n-checkbox-group {
+        // line-height: 2.5rem !important;
+    // }
     .n-input, .n-input-wrapper, .n-base-selection, .n-base-selection-label, .n-base-selection-tags {
         border-radius: 0.25rem !important;
-        line-height: 2.5rem !important;
-        min-height: 2.5rem !important;
+        // line-height: 2.5rem !important;
+        // min-height: 2.5rem !important;
         // background-color: transparent !important;
     }
 
@@ -39,33 +39,30 @@
     }
 
     .n-tag {
-        background-color: var(--muted);
-        color: var(--muted-foreground);
+        background-color: var(--shallow);
+        color: var(--shallow-foreground);
         border-radius: 0.25rem;
     }
     .n-tag__border {
         border-width: 0 !important;
     }
     .n-tag__close {
-        color: var(--muted-foreground);
+        color: var(--shallow-foreground);
         border-radius: 50%;
     }
     .n-tag__close:hover.n-tag__close::before {
-        background-color: var(--shallow);
-        color: var(--shallow-foreground);
+        background-color: var(--muted);
+        color: var(--muted-foreground);
     }
 
     .n-form-item-feedback__line {
         font-size: 0.75rem;
     }
 
-    .n-dropdown-menu {
-        border-radius: 0.5rem !important;
+}
 
-        
-    }
-    .n-dropdown-option-body::before {
-        background: var(--muted) !important;
 
-    }
+.n-dropdown-menu {
+    border-radius: 0.5rem !important;  
+    margin: 0 0.25rem;
 }
