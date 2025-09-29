@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="上传图片"> 上传图片，用于向用户收集图片信息 </n-card>
-    </div>
-    <n-card :bordered="false" class="mt-4 proCard">
+    <Card class="my-4">
+      <template #title>上传图片</template>
+      上传图片，用于向用户收集图片信息 
+    </Card>
+    <Card class="my-4">
       <n-grid cols="2 s:1 m:3 l:3 xl:3 2xl:3" responsive="screen">
         <n-grid-item offset="0 s:0 m:1 l:1 xl:1 2xl:1">
           <n-form
@@ -36,14 +37,14 @@
             </n-form-item>
             <div style="margin-left: 80px">
               <n-space>
-                <n-button type="primary" @click="formSubmit">提交预约</n-button>
-                <n-button @click="resetForm">重置</n-button>
+                <Button type="primary" @click="formSubmit">提交预约</Button>
+                <Button @click="resetForm">重置</Button>
               </n-space>
             </div>
           </n-form>
         </n-grid-item>
       </n-grid>
-    </n-card>
+    </Card>
   </div>
 </template>
 
@@ -52,6 +53,8 @@
   import { useMessage } from 'naive-ui';
   import { BasicUpload } from '@/components/Upload';
   import { useGlobSetting } from '@/hooks/setting';
+  import { Card } from '@/components/Card';
+  import { Button } from '@/components/Button';
 
   const globSetting = useGlobSetting();
 

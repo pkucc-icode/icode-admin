@@ -1,47 +1,40 @@
 <template>
   <div>
-    <div class="n-layout-page-header">
-      <Card>
-        <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen">
-          <n-gi>
-            <div class="flex items-center">
-              <div>
-                <n-avatar circle :size="64" :src="schoolboy" />
-              </div>
-              <div>
-                <p class="px-4 text-xl">早安，Ah jung，开始您一天的工作吧！</p>
-                <p class="px-4 text-gray-400">今日阴转大雨，15℃ - 25℃，出门记得带伞哦。</p>
-              </div>
+    <Card>
+      <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen">
+        <n-gi>
+          <div class="flex items-center">
+            <div>
+              <n-avatar circle :size="64" :src="schoolboy" />
             </div>
-          </n-gi>
-          <n-gi>
-            <div class="flex justify-end w-full">
-              <div class="flex flex-col justify-center flex-1 text-right">
-                <span class="text-secondary">项目数</span>
-                <span class="text-2xl">16</span>
-              </div>
-              <div class="flex flex-col justify-center flex-1 text-right">
-                <span class="text-secondary">待办</span>
-                <span class="text-2xl">3/15</span>
-              </div>
-              <div class="flex flex-col justify-center flex-1 text-right">
-                <span class="text-secondary">消息</span>
-                <span class="text-2xl">35</span>
-              </div>
+            <div>
+              <p class="px-4 text-xl">早安，Ah jung，开始您一天的工作吧！</p>
+              <p class="px-4 text-text">今日阴转大雨，15℃ - 25℃，出门记得带伞哦。</p>
             </div>
-          </n-gi>
-        </n-grid>
-      </Card>
-    </div>
-    <n-grid class="mt-4" cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="12" :y-gap="9">
+          </div>
+        </n-gi>
+        <n-gi>
+          <div class="flex justify-end w-full">
+            <div class="flex flex-col justify-center flex-1 text-right">
+              <span class="text-text">项目数</span>
+              <span class="text-2xl">16</span>
+            </div>
+            <div class="flex flex-col justify-center flex-1 text-right">
+              <span class="text-text">待办</span>
+              <span class="text-2xl">3/15</span>
+            </div>
+            <div class="flex flex-col justify-center flex-1 text-right">
+              <span class="text-text">消息</span>
+              <span class="text-2xl">35</span>
+            </div>
+          </div>
+        </n-gi>
+      </n-grid>
+    </Card>
+    <n-grid cols="2 s:1 m:1 l:2 xl:2 2xl:2" responsive="screen" :x-gap="12" :y-gap="9">
       <n-gi>
-        <Card
-          :segmented="{ content: true }"
-          content-style="padding: 0;"
-          :bordered="false"
-          size="small"
-          title="项目"
-        >
+        <Card>
+          <template #title>项目</template>
           <div class="flex flex-wrap project-card">
             <Card>
               <div class="flex">
@@ -52,15 +45,13 @@
                 </span>
                 <span class="ml-4 text-lg">Github</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400">
+              <div class="flex h-10 mt-2 text-text">
                 是一个面向开源及私有软件项目的托管平台。
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 开源君，2021-07-04 </div>
+              <div class="flex h-10 mt-2 text-text"> 开源君，2021-07-04 </div>
             </Card>
             <Card
-              size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
-              hoverable
             >
               <div class="flex">
                 <span>
@@ -70,13 +61,11 @@
                 </span>
                 <span class="ml-4 text-lg">Vue</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 渐进式 JavaScript 框架 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 学不动也要学，2021-07-04 </div>
+              <div class="flex h-10 mt-2 text-text"> 渐进式 JavaScript 框架 </div>
+              <div class="flex h-10 mt-2 text-text"> 学不动也要学，2021-07-04 </div>
             </Card>
             <Card
-              size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
-              hoverable
             >
               <div class="flex">
                 <span>
@@ -86,13 +75,11 @@
                 </span>
                 <span class="ml-4 text-lg">Html5</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> HTML5是互联网的下一代标准。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 撸码也是一种艺术 2021-04-01 </div>
+              <div class="flex h-10 mt-2 text-text"> HTML5是互联网的下一代标准。 </div>
+              <div class="flex h-10 mt-2 text-text"> 撸码也是一种艺术 2021-04-01 </div>
             </Card>
             <Card
-              size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
-              hoverable
             >
               <div class="flex">
                 <span>
@@ -102,13 +89,11 @@
                 </span>
                 <span class="ml-4 text-lg">Angular</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 现代 Web 开发平台，百万粉丝热捧。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 铁粉君 2021-07-04。 </div>
+              <div class="flex h-10 mt-2 text-text"> 现代 Web 开发平台，百万粉丝热捧。 </div>
+              <div class="flex h-10 mt-2 text-text"> 铁粉君 2021-07-04。 </div>
             </Card>
             <Card
-              size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
-              hoverable
             >
               <div class="flex">
                 <span>
@@ -118,13 +103,11 @@
                 </span>
                 <span class="ml-4 text-lg">React</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 用于构建用户界面的 JavaScript 库。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 技术牛 2021-07-04。 </div>
+              <div class="flex h-10 mt-2 text-text"> 用于构建用户界面的 JavaScript 库。 </div>
+              <div class="flex h-10 mt-2 text-text"> 技术牛 2021-07-04。 </div>
             </Card>
             <Card
-              size="small"
               class="cursor-pointer project-card-item ms:w-1/2 md:w-1/3"
-              hoverable
             >
               <div class="flex">
                 <span>
@@ -134,8 +117,8 @@
                 </span>
                 <span class="ml-4 text-lg">Js</span>
               </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 路是走出来的，而不是空想出来的。 </div>
-              <div class="flex h-10 mt-2 text-gray-400"> 架构组 2021-07-04 </div>
+              <div class="flex h-10 mt-2 text-text"> 路是走出来的，而不是空想出来的。 </div>
+              <div class="flex h-10 mt-2 text-text"> 架构组 2021-07-04 </div>
             </Card>
           </div>
         </Card>
@@ -315,7 +298,7 @@
 
 <style lang="less" scoped>
   .project-card {
-    margin-right: -6px;
+    // margin-right: -6px;
 
     &-item {
       margin: -1px;

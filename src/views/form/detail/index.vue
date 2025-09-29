@@ -1,17 +1,13 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="表单详情">
+      <Card>
+        <template #title>表单详情</template>
         表单除了提交数据，有时也用于显示只读信息。
-      </n-card>
+      </Card>
     </div>
-    <n-card
-      :bordered="false"
-      title="基本信息"
-      class="mt-4 proCard"
-      size="small"
-      :segmented="{ content: true }"
-    >
+    <Card>
+      <template #title>基本信息</template>
       <n-descriptions label-placement="left" class="py-2">
         <n-descriptions-item>
           <template #label>收款人姓名</template>
@@ -22,17 +18,12 @@
         <n-descriptions-item label="付款账户">NaiveUiAdmin@163.com</n-descriptions-item>
         <n-descriptions-item label="转账金额">￥1980.00</n-descriptions-item>
         <n-descriptions-item label="状态">
-          <n-tag type="success"> 已到账</n-tag>
+          <Tag type="success"> 已到账</Tag>
         </n-descriptions-item>
       </n-descriptions>
-    </n-card>
-    <n-card
-      :bordered="false"
-      title="其它信息"
-      class="mt-4 proCard"
-      size="small"
-      :segmented="{ content: true }"
-    >
+    </Card>
+    <Card>
+      <template #title>其他信息</template>
       <n-descriptions label-placement="left" class="py-2">
         <n-descriptions-item>
           <template #label>城市</template>
@@ -43,17 +34,12 @@
         <n-descriptions-item label="地址">广东省深圳市南山区</n-descriptions-item>
         <n-descriptions-item label="生日">1991-06-04</n-descriptions-item>
         <n-descriptions-item label="认证">
-          <n-tag type="success"> 已认证</n-tag>
+          <Tag type="success"> 已认证</Tag>
         </n-descriptions-item>
       </n-descriptions>
-    </n-card>
-    <n-card
-      :bordered="false"
-      title="表格信息"
-      class="mt-4 proCard"
-      size="small"
-      :segmented="{ content: true }"
-    >
+    </Card>
+    <Card>
+      <template #title>表格信息</template>
       <n-table :bordered="false" :single-line="false">
         <thead>
           <tr>
@@ -72,8 +58,8 @@
             <td>1993-11-09</td>
             <td>
               <n-space>
-                <n-button size="small" type="error">删除</n-button>
-                <n-button size="small" type="info">查看</n-button>
+                <Button size="small" type="error">删除</Button>
+                <Button size="small" type="info">查看</Button>
               </n-space>
             </td>
           </tr>
@@ -84,8 +70,8 @@
             <td>1991-09-11</td>
             <td>
               <n-space>
-                <n-button size="small" type="error">删除</n-button>
-                <n-button size="small" type="info">查看</n-button>
+                <Button size="small" type="error">删除</Button>
+                <Button size="small" type="info">查看</Button>
               </n-space>
             </td>
           </tr>
@@ -96,8 +82,8 @@
             <td>1990-11-03</td>
             <td>
               <n-space>
-                <n-button size="small" type="error">删除</n-button>
-                <n-button size="small" type="info">查看</n-button>
+                <Button size="small" type="error">删除</Button>
+                <Button size="small" type="info">查看</Button>
               </n-space>
             </td>
           </tr>
@@ -108,17 +94,21 @@
             <td>1992-03-11</td>
             <td>
               <n-space>
-                <n-button size="small" type="error">删除</n-button>
-                <n-button size="small" type="info">查看</n-button>
+                <Button size="small" type="error">删除</Button>
+                <Button size="small" type="info">查看</Button>
               </n-space>
             </td>
           </tr>
         </tbody>
       </n-table>
-    </n-card>
+    </Card>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { Button } from '@/components/Button';
+import { Tag } from '@/components/Tag';
+
+</script>
 
 <style lang="less" scoped></style>

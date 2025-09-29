@@ -260,7 +260,7 @@
   .table-toolbar {
     display: flex;
     justify-content: space-between;
-    // padding: 0 0 16px 0;
+    padding: 0 0 1rem 0;
 
     &-left {
       display: flex;

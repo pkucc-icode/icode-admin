@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="模态框">
+      <Card :bordered="false" title="模态框">
         模态框，用于向用户收集或展示信息，Modal 采用 Dialog 预设，扩展拖拽效果
         <br />
         以下是 useModal
         方式，ref方式，也支持，使用方式和其他组件一致，如：modalRef.value.closeModal()
-      </n-card>
+      </Card>
     </div>
-    <n-card :bordered="false" class="mt-4 proCard">
+    <Card :bordered="false" class="mt-4 proCard">
       <n-alert title="Modal嵌套Form" type="info">
         使用 useModal 进行弹窗展示和操作，并演示了在Modal内和Form组件，组合使用方法
       </n-alert>
@@ -29,7 +29,7 @@
         组件暴露了，setProps 方法，用于修改组件内部
         Props，比如标题，等，具体参考UI框架文档，DialogReactive Properties
       </n-alert>
-    </n-card>
+    </Card>
 
     <basicModal @register="modalRegister" ref="modalRef" class="basicModal" @on-ok="okModal">
       <template #default>
@@ -59,6 +59,7 @@
   import { useMessage } from 'naive-ui';
   import { basicModal, useModal } from '@/components/Modal';
   import { BasicForm, FormSchema, useForm } from '@/components/Form/index';
+  import { Card } from '@/components/Card';
 
   const schemas: FormSchema[] = [
     {

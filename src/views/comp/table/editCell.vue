@@ -1,5 +1,5 @@
 <template>
-  <n-card :bordered="false" class="proCard">
+  <Card class="my-4">
     <BasicTable
       title="表格列表"
       titleTooltip="这是一个提示"
@@ -12,7 +12,7 @@
       @update:checked-row-keys="onCheckedRow"
       :scroll-x="1360"
     />
-  </n-card>
+  </Card>
 </template>
 
 <script lang="ts" setup>
@@ -20,6 +20,7 @@
   import { BasicTable } from '@/components/Table';
   import { getTableList } from '@/api/table/list';
   import { columns } from './CellColumns';
+  import { Card } from '@/components/Card';
 
   const actionRef = ref();
   const params = reactive({

@@ -1,12 +1,12 @@
 <template>
-  <n-card :bordered="false">
+  <Card>
     <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
       <template #statusSlot="{ model, field }">
         <n-input v-model:value="model[field]" />
       </template>
     </BasicForm>
-  </n-card>
-  <n-card :bordered="false" class="mt-3">
+  </Card>
+  <Card class="my-4">
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
@@ -18,20 +18,15 @@
       :striped="true"
     >
       <template #tableTitle>
-        <n-button type="primary" @click="addTable">
-          <template #icon>
-            <n-icon>
-              <PlusOutlined />
-            </n-icon>
-          </template>
+        <Button type="primary" @click="addTable" :icon="PlusOutlined">
           新建
-        </n-button>
+        </Button>
       </template>
 
       <template #toolbar> </template>
     </BasicTable>
 
-    <n-modal v-model:show="showModal" :show-icon="false" preset="dialog" title="新建">
+    <!-- <n-modal v-model:show="showModal" :show-icon="false" preset="dialog" title="新建">
       <n-form
         :model="formParams"
         :rules="rules"
@@ -53,12 +48,14 @@
 
       <template #action>
         <n-space>
-          <n-button @click="() => (showModal = false)">取消</n-button>
-          <n-button type="info" :loading="formBtnLoading" @click="confirmForm">确定</n-button>
+          <Button @click="() => (showModal = false)">取消</Button>
+          <Button type="info" :loading="formBtnLoading" @click="confirmForm">确定</Button>
         </n-space>
       </template>
-    </n-modal>
-  </n-card>
+    </n-modal> -->
+
+    <CreateModal ref="createModalRef" />
+  </Card>
 </template>
 
 <script lang="ts" setup>
@@ -69,26 +66,11 @@
   import { columns, ListData } from './columns';
   import { PlusOutlined } from '@vicons/antd';
   import { useRouter } from 'vue-router';
-  import { type FormRules } from 'naive-ui';
+  import { Card } from '@/components/Card';
+  import { Button } from '@/components/Button';
+  import CreateModal from './CreateModal.vue';
 
-  const rules: FormRules = {
-    name: {
-      required: true,
-      trigger: ['blur', 'input'],
-      message: '请输入名称',
-    },
-    address: {
-      required: true,
-      trigger: ['blur', 'input'],
-      message: '请输入地址',
-    },
-    date: {
-      type: 'number',
-      required: true,
-      trigger: ['blur', 'change'],
-      message: '请选择日期',
-    },
-  };
+  const createModalRef = ref();
 
   const schemas: FormSchema[] = [
     {
@@ -215,16 +197,16 @@
   ];
 
   const router = useRouter();
-  const formRef: any = ref(null);
+  // const formRef: any = ref(null);
   const actionRef = ref();
 
-  const showModal = ref(false);
-  const formBtnLoading = ref(false);
-  const formParams = reactive({
-    name: '',
-    address: '',
-    date: null,
-  });
+  // const showModal = ref(false);
+  // const formBtnLoading = ref(false);
+  // const formParams = reactive({
+  //   name: '',
+  //   address: '',
+  //   date: null,
+  // });
 
   const actionColumn = reactive({
     width: 220,
@@ -285,7 +267,7 @@
   });
 
   function addTable() {
-    showModal.value = true;
+    createModalRef.value.openModal();
   }
 
   const loadDataTable = async (res) => {
@@ -300,22 +282,22 @@
     actionRef.value.reload();
   }
 
-  function confirmForm(e) {
-    e.preventDefault();
-    formBtnLoading.value = true;
-    formRef.value.validate((errors) => {
-      if (!errors) {
-        window['$message'].success('新建成功');
-        setTimeout(() => {
-          showModal.value = false;
-          reloadTable();
-        });
-      } else {
-        window['$message'].error('请填写完整信息');
-      }
-      formBtnLoading.value = false;
-    });
-  }
+  // function confirmForm(e) {
+  //   e.preventDefault();
+  //   formBtnLoading.value = true;
+  //   formRef.value.validate((errors) => {
+  //     if (!errors) {
+  //       window['$message'].success('新建成功');
+  //       setTimeout(() => {
+  //         showModal.value = false;
+  //         reloadTable();
+  //       });
+  //     } else {
+  //       window['$message'].error('请填写完整信息');
+  //     }
+  //     formBtnLoading.value = false;
+  //   });
+  // }
 
   function handleEdit(record: Recordable) {
     console.log('点击了编辑', record);

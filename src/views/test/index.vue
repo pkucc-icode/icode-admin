@@ -1,8 +1,11 @@
 <template>
   <div class="grid grid-cols-2 gap-4 mb-4">
-    <Card show-header>
-      <template #header>
+    <Card class="glass-card" head-divider>
+      <template #title>
         测试卡片1
+      </template>
+      <template #description>
+        这是一段测试的文本描述
       </template>
       <n-button-group>
         <Button ghost :icon="CashIcon">再吃</Button>
@@ -10,11 +13,7 @@
         <Button round :icon="CashIcon">苹果</Button>
       </n-button-group>
     </Card>
-    <Card show-header>
-      <template #header>
-        测试卡片2
-      </template>
-      asuihui
+    <Card class="glass-card">
       <n-space>
         <Button>Default</Button>
         <Button type="tertiary">
@@ -147,7 +146,7 @@
   </n-space>
     </Card>
   </div>
-  <Card class="mb-4">
+  <Card class="glass-card">
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
@@ -155,8 +154,15 @@
       ref="actionRef"
       :actionColumn="actionColumn"
       @update:checked-row-keys="onCheckedRow"
-    />    
+    >
+      <template #tableTitle>
+        <Button type="primary" @click="createModalRef.openModal()" :icon="PlusOutlined">
+          新增角色
+        </Button>
+      </template>
+    </BasicTable>    
   </Card>
+  <CreateModal ref="createModalRef" />
 </template>
 
 <script lang="ts" setup>
@@ -164,14 +170,17 @@
   import { BasicTable, TableAction } from '@/components/Table';
   import { columns } from './basicColumns';
   import { ref, reactive, h } from 'vue';
-  import { DeleteOutlined, EditOutlined } from '@vicons/antd';
+  import { DeleteOutlined, EditOutlined, PlusOutlined } from '@vicons/antd';
   import { useDialog, useMessage } from 'naive-ui';
   import { getTableList } from '@/api/table/list';
   import { Button } from '@/components/Button';
-  import { CashOutline as CashIcon } from '@vicons/ionicons5'
+  import { CashOutline as CashIcon } from '@vicons/ionicons5';
+  import CreateModal from '../list/basicList/CreateModal.vue';
+
   const message = useMessage();
   const dialog = useDialog();
   const actionRef = ref();
+  const createModalRef = ref();
 
   const params = reactive({
     pageSize: 5,
@@ -201,8 +210,6 @@
       {
         label: '删除',
         type: 'error',
-        round: true,
-        size: 'small',
         // 配置 color 会覆盖 type
         icon: DeleteOutlined,
         onClick: handleDelete.bind(null, record),
@@ -212,8 +219,6 @@
       {
         label: '编辑',
         type: 'info',
-        round: true,
-        size: 'small',
         icon: EditOutlined,
         onClick: handleEdit.bind(null, record),
         auth: ['basic_list'],

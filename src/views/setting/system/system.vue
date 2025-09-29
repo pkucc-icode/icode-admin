@@ -1,8 +1,8 @@
 <template>
   <div>
-    <n-grid :x-gap="24">
+    <n-grid :x-gap="16">
       <n-grid-item span="6">
-        <n-card :bordered="false" size="small" class="proCard">
+        <Card>
           <n-thing
             class="thing-cell"
             v-for="item in typeTabList"
@@ -13,24 +13,26 @@
             <template #header>{{ item.name }}</template>
             <template #description>{{ item.desc }}</template>
           </n-thing>
-        </n-card>
+        </Card>
       </n-grid-item>
       <n-grid-item span="18">
-        <n-card :bordered="false" size="small" :title="state.typeTitle" class="proCard">
+        <Card>
+          <template #title> {{ state.typeTitle }}</template>
           <BasicSetting v-if="state.type === 1" />
           <RevealSetting v-if="state.type === 2" />
           <EmailSetting v-if="state.type === 3" />
-        </n-card>
+        </Card>
       </n-grid-item>
     </n-grid>
   </div>
 </template>
 <script lang="ts" setup>
-  import { reactive, toRefs } from 'vue';
+  import { reactive } from 'vue';
   import BasicSetting from './BasicSetting.vue';
   import RevealSetting from './RevealSetting.vue';
   import EmailSetting from './EmailSetting.vue';
-
+  import { Card } from '@/components/Card';
+ 
   const typeTabList = [
     {
       name: '基本设置',

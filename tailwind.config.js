@@ -74,7 +74,8 @@ module.exports = {
       error: {
         DEFAULT: 'var(--error)'
       },
-      }
+      text: 'var(--text)'
+     }
   	}
   },
     plugins: [require("tailwindcss-animate")]

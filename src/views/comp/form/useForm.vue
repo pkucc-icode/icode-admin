@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础表单"> useForm 表单，用于向用户收集表单信息 </n-card>
-    </div>
-    <n-card :bordered="false" class="mt-4 proCard">
+    <Card class="my-4"> 
+      <template #title>基础表单</template>
+      useForm 表单，用于向用户收集表单信息 
+    </Card>
+    <Card class="my-4">
       <div class="BasicForm">
         <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
           <template #statusSlot="{ model, field }">
@@ -11,13 +12,14 @@
           </template>
         </BasicForm>
       </div>
-    </n-card>
+    </Card>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { BasicForm, FormSchema, useForm } from '@/components/Form/index';
   import { useMessage } from 'naive-ui';
+  import { Card } from '@/components/Card';
 
   const schemas: FormSchema[] = [
     {

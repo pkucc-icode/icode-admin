@@ -1,31 +1,19 @@
 <template>
-  <div>
-    <n-grid :x-gap="24">
-      <n-grid-item span="6">
-        <n-card :bordered="false" size="small" class="proCard">
-          <n-thing
-            class="thing-cell"
-            v-for="item in typeTabList"
-            :key="item.key"
-            :class="{ 'thing-cell-on': state.type === item.key }"
-            @click="switchType(item)"
-          >
-            <template #header>{{ item.name }}</template>
-            <template #description>{{ item.desc }}</template>
-          </n-thing>
-        </n-card>
-      </n-grid-item>
-      <n-grid-item span="18">
-        <n-card :bordered="false" size="small" :title="state.typeTitle" class="proCard">
-          <BasicSetting v-if="state.type === 1" />
-          <SafetySetting v-if="state.type === 2" />
-        </n-card>
-      </n-grid-item>
-    </n-grid>
-  </div>
+  <Card>
+    <template #title>个人设置</template>
+    <n-tabs
+      type="bar"
+      animated
+      placement="left"
+    >
+      <n-tab-pane v-for="tab in typeTabList" :name="tab.name" :tab="tab.name"> 
+        <component :is="tab.component" />     
+      </n-tab-pane>
+    </n-tabs>
+  </Card>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { Card } from '@/components/Card';
 import BasicSetting from './BasicSetting.vue';
 import SafetySetting from './SafetySetting.vue';
 
@@ -34,23 +22,16 @@ const typeTabList = [
     name: '基本设置',
     desc: '个人账户信息设置',
     key: 1,
+    component: BasicSetting
   },
   {
     name: '安全设置',
     desc: '密码，邮箱等设置',
     key: 2,
+    component: SafetySetting
   },
 ];
 
-const state = reactive({
-  type: 1,
-  typeTitle: '基本设置',
-});
-
-function switchType(e) {
-  state.type = e.key;
-  state.typeTitle = e.name;
-}
 </script>
 <style lang="less" scoped>
 .thing-cell {

@@ -5,12 +5,13 @@
     </div>
     <div class="text-center">
       <h1 class="text-base text-gray-500">抱歉，服务器出错了</h1>
-      <n-button type="info" @click="goHome">回到首页</n-button>
+      <Button type="info" @click="goHome">回到首页</Button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+  import { Button } from '@/components/Button';
   import { useRouter } from 'vue-router';
   const router = useRouter();
   function goHome() {
@@ -21,9 +22,7 @@
 <style lang="less" scoped>
   .page-container {
     width: 100%;
-    border-radius: 4px;
-    padding: 50px 0;
-    height: 100vh;
+    height: calc(100vh - 220px);
 
     .text-center {
       h1 {

@@ -1,5 +1,5 @@
 import { h } from 'vue';
-import { NAvatar, NTag } from 'naive-ui';
+// import { NAvatar, NTag } from 'naive-ui';
 import { Tag } from '@/components/Tag';
 import { BasicColumn } from '@/components/Table';
 export interface ListData {

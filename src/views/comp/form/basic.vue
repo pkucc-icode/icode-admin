@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础表单"> 基础表单，用于向用户收集表单信息 </n-card>
-    </div>
-    <n-card :bordered="false" class="mt-4 proCard">
+    <Card class="my-4"> 
+      <template #title>基础表单</template>
+      基础表单，用于向用户收集表单信息 
+    </Card>
+    <Card class="my-4">
       <div class="BasicForm">
         <BasicForm
           submitButtonText="提交预约"
@@ -18,12 +19,13 @@
           </template>
         </BasicForm>
       </div>
-    </n-card>
+    </Card>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { BasicForm, FormSchema } from '@/components/Form/index';
+  import { BasicForm, FormSchema } from '@/components/Form';
+  import { Card } from '@/components/Card';
   import { useMessage } from 'naive-ui';
 
   const schemas: FormSchema[] = [

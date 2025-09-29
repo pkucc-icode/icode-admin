@@ -1,5 +1,5 @@
 <template>
-  <n-card :bordered="false" class="proCard">
+  <Card>
     <BasicTable
       title="表格列表"
       titleTooltip="这是一个提示"
@@ -13,7 +13,7 @@
       @update:checked-row-keys="onCheckedRow"
       :scroll-x="1590"
     />
-  </n-card>
+  </Card>
 </template>
 
 <script lang="ts" setup>
@@ -72,6 +72,7 @@
       return [
         {
           label: '编辑',
+          type: 'primary',
           onClick: handleEdit.bind(null, record),
         },
       ];
@@ -79,10 +80,12 @@
       return [
         {
           label: '保存',
+          type: 'info',
           onClick: handleSave.bind(null, record),
         },
         {
           label: '取消',
+          type: 'warning',
           onClick: handleCancel.bind(null, record),
         },
       ];

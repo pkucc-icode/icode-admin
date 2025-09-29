@@ -1,6 +1,7 @@
 import { h } from 'vue';
-import { NAvatar, NTag } from 'naive-ui';
+import { NAvatar } from 'naive-ui';
 import { BasicColumn } from '@/components/Table';
+import { Tag } from '@/components/Tag';
 export interface ListData {
   id: number;
   name: string;
@@ -49,9 +50,9 @@ export const columns: BasicColumn<ListData>[] = [
     key: 'sex',
     render(record) {
       return h(
-        NTag,
+        Tag,
         {
-          type: record.sex === 'male' ? 'info' : 'error',
+          color: record.sex === 'male' ? '#D6E4F8' : '#F6D1CD',
         },
         {
           default: () => sexMap[record.sex],
@@ -73,7 +74,7 @@ export const columns: BasicColumn<ListData>[] = [
     key: 'status',
     render(record) {
       return h(
-        NTag,
+        Tag,
         {
           type:
             record.status === 'close'

@@ -1,9 +1,9 @@
 <template>
-  <Card class="mb-4" show-header>
-    <template #header>基础表单</template>
+  <Card class="my-4">
+    <template #title>基础表单</template>
     表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式。
   </Card>
-  <Card>
+  <Card class="my-4">
     <n-grid cols="1 s:1 m:3 l:3 xl:3 2xl:3" responsive="screen">
       <n-grid-item offset="0 s:0 m:1 l:1 xl:1 2xl:1">
         <n-form
@@ -84,6 +84,7 @@
   import { BasicUpload } from '@/components/Upload';
   import { useGlobSetting } from '@/hooks/setting';
   import { Select } from '@/components/Select';
+  import { Card } from '@/components/Card';
 
   const globSetting = useGlobSetting();
 

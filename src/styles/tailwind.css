@@ -13,7 +13,7 @@
     --popover-foreground: #0A0A0A;
     --primary: #BD1714;
     --primary-foreground: #FFFFFF;
-    --secondary: #E6E6E6;
+    --secondary: #F2F2F2;
     --secondary-foreground: #393D47;
     --muted: #F6D1CD;
     --muted-foreground: #BD1714;
@@ -44,14 +44,14 @@
   .dark {
     --background: #181818;
     --foreground: #FFFFFF;
-    --card: #FFFFFF;
-    --card-foreground: #0A0A0A;
+    --card: #141414;
+    --card-foreground: #FFFFFF;
     --popover: #FFFFFF;
     --popover-foreground: #0A0A0A;
     --primary: #BD1714;
     --primary-foreground: #FFFFFF;
     --secondary: #242424;
-    --secondary-foreground: #E6E6E6;
+    --secondary-foreground: #F2F2F2;
     --muted: #201b1b;
     --muted-foreground: #BD1714;
     --shallow: #727272;

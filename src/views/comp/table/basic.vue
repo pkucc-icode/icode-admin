@@ -1,5 +1,5 @@
 <template>
-  <n-card :bordered="false" class="proCard">
+  <Card class="my-4">
     <BasicTable
       title="表格列表"
       titleTooltip="这是一个提示"
@@ -11,7 +11,7 @@
       :scroll-x="1360"
       @update:checked-row-keys="onCheckedRow"
     />
-  </n-card>
+  </Card>
 </template>
 
 <script lang="ts" setup>
@@ -21,6 +21,7 @@
   import { columns } from './basicColumns';
   import { useDialog, useMessage } from 'naive-ui';
   import { DeleteOutlined, EditOutlined } from '@vicons/antd';
+  import { Card } from '@/components/Card';
 
   const message = useMessage();
   const dialog = useDialog();
@@ -50,6 +51,7 @@
       {
         label: '删除',
         // 配置 color 会覆盖 type
+        type: 'error',
         icon: DeleteOutlined,
         onClick: handleDelete.bind(null, record),
         // 根据权限控制是否显示: 有权限，会显示，支持多个
@@ -57,6 +59,7 @@
       },
       {
         label: '编辑',
+        type: 'info',
         icon: EditOutlined,
         onClick: handleEdit.bind(null, record),
         auth: ['basic_list'],

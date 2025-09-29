@@ -1,37 +1,24 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="菜单权限管理">
+      <Card>
+        <template #title>菜单权限管理</template>
         页面数据为 Mock 示例数据，非真实数据。
-      </n-card>
+      </Card>
     </div>
     <n-grid class="mt-4" cols="1 s:1 m:1 l:3 xl:3 2xl:3" responsive="screen" :x-gap="12">
       <n-gi span="1">
-        <n-card :segmented="{ content: true }" :bordered="false" size="small">
+        <Card :segmented="{ content: true }" :bordered="false" size="small">
           <template #header>
             <n-space>
               <n-dropdown trigger="hover" @select="selectAddMenu" :options="addMenuOptions">
-                <n-button type="info" ghost icon-placement="right">
+                <Button type="info" ghost icon-placement="right" :icon="DownOutlined">
                   添加菜单
-                  <template #icon>
-                    <div class="flex items-center">
-                      <n-icon size="14">
-                        <DownOutlined />
-                      </n-icon>
-                    </div>
-                  </template>
-                </n-button>
+                </Button>
               </n-dropdown>
-              <n-button type="info" ghost icon-placement="left" @click="packHandle">
+              <Button type="info" ghost icon-placement="left" @click="packHandle" :icon="AlignLeftOutlined">
                 全部{{ expandedKeys.length ? '收起' : '展开' }}
-                <template #icon>
-                  <div class="flex items-center">
-                    <n-icon size="14">
-                      <AlignLeftOutlined />
-                    </n-icon>
-                  </div>
-                </template>
-              </n-button>
+              </Button>
             </n-space>
           </template>
           <div class="w-full menu">
@@ -64,13 +51,13 @@
               </template>
             </div>
           </div>
-        </n-card>
+        </Card>
       </n-gi>
       <n-gi span="2">
-        <n-card :segmented="{ content: true }" :bordered="false" size="small">
+        <Card>
           <template #header>
             <n-space>
-              <n-icon size="18">
+              <n-icon size="20">
                 <FormOutlined />
               </n-icon>
               <span>编辑菜单{{ treeItemTitle ? `：${treeItemTitle}` : '' }}</span>
@@ -111,15 +98,15 @@
             </n-form-item>
             <n-form-item path="auth" style="margin-left: 100px">
               <n-space>
-                <n-button type="primary" :loading="subLoading" @click="formSubmit"
-                  >保存修改</n-button
+                <Button type="primary" :loading="subLoading" @click="formSubmit"
+                  >保存修改</Button
                 >
-                <n-button @click="handleReset">重置</n-button>
-                <n-button @click="handleDel">删除</n-button>
+                <Button @click="handleReset">重置</Button>
+                <Button @click="handleDel">删除</Button>
               </n-space>
             </n-form-item>
           </n-form>
-        </n-card>
+        </Card>
       </n-gi>
     </n-grid>
     <CreateDrawer ref="createDrawerRef" :title="drawerTitle" />
@@ -133,7 +120,9 @@
   import { getTreeItem } from '@/utils';
   import CreateDrawer from './CreateDrawer.vue';
   import type { ListDate } from '@/api/system/menu';
-
+  import { Card } from '@/components/Card';
+  import { Button } from '@/components/Button';
+ 
   const rules = {
     label: {
       required: true,
