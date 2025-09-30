@@ -16,7 +16,9 @@ interface ButtonProps {
   [key: string]: any
 }
 
-const props = defineProps<ButtonProps>()
+const props = withDefaults(defineProps<ButtonProps>(),{
+  size: 'medium'
+})
 
 const emit = defineEmits<{
   (e: 'click', evt: MouseEvent): void
@@ -61,9 +63,9 @@ const buttonProps = computed(() => {
 
 const sizeClassMap: Record<string, string> = {
   tiny: 'h-6 px-2 text-xs',
-  small: 'h-7 px-3 text-sm',
-  medium: 'h-8 px-4 text-base',
-  large: 'h-10 px-5 text-lg'
+  small: 'h-7 px-2.5 text-sm',
+  medium: 'h-8 px-3 text-sm',
+  large: 'h-9 px-4 text-base'
 }
 
 const buttonClass = computed(() => {

@@ -20,7 +20,7 @@ components里有二次封装的组件，后续的自封装组件都放这里，�
 - ScrollArea, 滚动条（shadcn）
 - Card, 易于扩展的卡片（shadcn）
 - Search, 一个html原生封装的搜索框，易于定制外观
-- SvgIcon, 方便直接使用svg图标
+- SvgIcon, 方便直接使用svg图标，但是目前不支持三方封装好的图标组件
 - Table, 数据表格，集成分页功能，已覆盖大部分样式（native-ui）
 - Tooltip, 悬浮文本，自动根据文本省略情况显示，也可指定强制显示（native-ui）
 - Button, 按钮，预设颜色+自定义颜色+暗主题适应+自动字体颜色（native-ui）

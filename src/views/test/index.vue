@@ -22,13 +22,13 @@
         <Button type="primary">
           Primary
         </Button>
-        <Button type="info">
+        <Button type="info" size="small">
           Info
         </Button>
-        <Button type="success">
+        <Button type="success" size="large">
           Success
         </Button>
-        <Button type="warning">
+        <Button type="warning" size="tiny">
           Warning
         </Button>
         <Button type="error">
