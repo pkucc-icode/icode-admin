@@ -207,7 +207,7 @@
     display: flex;
     flex-direction: row;
     flex: auto;
-    // background-image: linear-gradient(to right bottom, #d8e4ff, #dfe6fc, #e5e7f9, #eaeaf6, #edecf3, #eeecf4, #efedf4, #f0edf5, #f2ebf8, #f5e8fb, #fae4fc, #ffe1fc);
+    // background-image: linear-gradient(to right bottom, #f6eaea, #ffefef);
     // background: url("/R-C.jpg") no-repeat center center / cover !important;
     background: var(--background);
 

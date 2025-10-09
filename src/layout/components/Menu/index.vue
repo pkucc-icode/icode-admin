@@ -67,6 +67,7 @@
           itemIconColorHover: 'var(--muted-foreground)',
 
           itemColorActive: 'var(--primary)',
+          itemIconColorCollapsed: 'var(--foreground)',
           itemColorActiveCollapsed: 'var(--primary)',
           itemTextColorActive: 'var(--accent-foreground)',
           itemIconColorActive: 'var(--accent-foreground)',
@@ -107,6 +108,7 @@
           itemIconColorHoverInverted: base.itemIconColorHover,
 
           itemColorActiveInverted: base.itemColorActive,
+          itemIconColorCollapsedInverted: base.itemIconColorCollapsed,
           itemColorActiveCollapsedInverted: base.itemColorActiveCollapsed,
           itemTextColorActiveInverted: base.itemTextColorActive,
           itemIconColorActiveInverted: base.itemIconColorActive,
@@ -132,10 +134,21 @@
           borderRadius: base.borderRadius,
         } as const
 
+
         return {
           ...base,
           ...arrowFromText,
           ...inverted,
+          peerOverrides: {
+            Dropdown: {
+              // light 模式
+              color: 'blue',
+              optionTextColor: 'red',
+              // dark 模式（inverted）
+              colorInverted: 'green',
+              optionTextColorInverted: 'yellow'
+            }
+          }
         }
       });
 

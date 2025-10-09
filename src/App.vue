@@ -5,6 +5,7 @@
     :theme="getDarkTheme"
     :theme-overrides="getThemeOverrides"
     :date-locale="dateZhCN"
+    :key="designStore.darkTheme ? 'dark' : 'light'"
   >
     <AppProvider>
       <RouterView />
@@ -49,9 +50,12 @@
         colorLoading: appTheme,
       },
       Modal: {
-        borderRadius: '70px',
         color: 'var(--card)',
         textColor: 'var(--foreground)',
+      },
+      Dropdown: {
+        color: 'var(--popover)',
+        colorInverted: 'var(--popover)',
       }
     };
   });
