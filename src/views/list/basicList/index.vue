@@ -56,21 +56,40 @@
 
     <CreateModal ref="createModalRef" />
   </Card>
+
+  <!-- 图片预览组件 -->
+  <ImagePreview
+    v-model="showImagePreview"
+    :images="previewImages"
+    :initial-index="0"
+  />
 </template>
 
 <script lang="ts" setup>
-  import { h, reactive, ref } from 'vue';
+  import { h, reactive, ref, onMounted } from 'vue';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, FormSchema, useForm } from '@/components/Form/index';
   import { getTableList } from '@/api/table/list';
-  import { columns, ListData } from './columns';
+  import { columns, ListData, setAvatarClickHandler } from './columns';
   import { PlusOutlined } from '@vicons/antd';
   import { useRouter } from 'vue-router';
   import { Card } from '@/components/Card';
   import { Button } from '@/components/Button';
   import CreateModal from './CreateModal.vue';
+  import ImagePreview from '@/components/ImagePreview/index.vue';
 
   const createModalRef = ref();
+  const showImagePreview = ref(false);
+  const previewImages = ref<string[]>([]);
+
+  
+  onMounted(() => {
+    // 设置头像点击处理
+    setAvatarClickHandler((avatar: string) => {
+      previewImages.value = [avatar];
+      showImagePreview.value = true;
+    });
+  });
 
   const schemas: FormSchema[] = [
     {
