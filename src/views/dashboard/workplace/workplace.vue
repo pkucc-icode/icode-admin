@@ -35,7 +35,7 @@
       <n-gi>
         <Card>
           <template #title>项目</template>
-          <div class="flex flex-wrap project-card">
+          <div class="flex flex-wrap gap-4">
             <Card>
               <div class="flex">
                 <span>

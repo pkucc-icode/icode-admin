@@ -1,6 +1,7 @@
 import { h } from 'vue';
 import { NAvatar } from 'naive-ui';
 import { BasicColumn } from '@/components/Table';
+import { ImagePreview } from '@/components/ImagePreview';
 import { Tag } from '@/components/Tag';
 
 export interface ListData {

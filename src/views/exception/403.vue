@@ -22,7 +22,9 @@
 <style lang="less" scoped>
   .page-container {
     width: 100%;
-    height: calc(100vh - 220px);
+    min-height: calc(100vh - 220px);
+    height: 100%;
+    padding: 20px 0;
 
     .text-center {
       h1 {
@@ -33,6 +35,7 @@
 
     img {
       width: 350px;
+      max-width: 90%;
       margin: 0 auto;
     }
   }

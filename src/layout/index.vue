@@ -47,32 +47,35 @@
           <PageHeader v-model:collapsed="collapsed" :inverted="inverted" />
         </div>
       </n-layout-header>
-      <div class="h-[calc(100vh-96px)] ml-2 mr-4 mt-[80px] overflow-y-hidden rounded-[30px] glass-card relative"
-      >
-        <ScrollArea
-          class="p-4"
-          :class="{
-            'h-[calc(100vh-152px)] bottom-0 absolute w-full': fixedMulti
-          }"
+      <transition :name="getTransitionName" mode="out-in" appear>
+        <div class="h-[calc(100vh-96px)] ml-2 mr-4 mt-[80px] overflow-y-hidden rounded-[30px] glass-card relative"
         >
-          <TabsView v-if="isMultiTabs" v-model:collapsed="collapsed" />                     
-
-          <div
-            class="layout-content-main"
+          <ScrollArea
+            class="p-4"
             :class="{
-              'layout-content-main-fix': fixedMulti,
-              'fluid-header': fixedHeader === 'static',
+              'h-[calc(100vh-152px)] bottom-0 absolute w-full': fixedMulti
             }"
           >
-            <MainView />
-          </div>
-          <!--1.15废弃，没啥用，占用操作空间-->
-          <!--        <NLayoutFooter v-if="getShowFooter">-->
-          <!--          <PageFooter />-->
-          <!--        </NLayoutFooter>-->
-        </ScrollArea>
+            <TabsView v-if="isMultiTabs" v-model:collapsed="collapsed" />                     
 
-      </div>
+            <div
+              class="layout-content-main"
+              :class="{
+                'layout-content-main-fix': fixedMulti,
+                'fluid-header': fixedHeader === 'static',
+              }"
+            >
+              <MainView />
+            </div>
+            <!--1.15废弃，没啥用，占用操作空间-->
+            <!--        <NLayoutFooter v-if="getShowFooter">-->
+            <!--          <PageFooter />-->
+            <!--        </NLayoutFooter>-->
+          </ScrollArea>
+
+        </div>
+      </transition>
+
 
       <n-back-top :right="100" />
     </n-layout>

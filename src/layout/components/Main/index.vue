@@ -1,6 +1,6 @@
 <template>
   <RouterView>
-    <template #default="{ Component, route }">
+    <!-- <template #default="{ Component, route }">
       <template v-if="mode === 'production'">
         <transition :name="getTransitionName" mode="out-in" appear>
           <keep-alive v-if="keepAliveComponents.length" :include="keepAliveComponents">
@@ -15,6 +15,16 @@
         </keep-alive>
         <component v-else :is="Component" :key="route.fullPath" />
       </template>
+    </template> -->
+    <template #default="{ Component, route }">
+      <transition :name="getTransitionName" mode="out-in" appear>
+        <div :key="route.fullPath" class="transition-wrapper">
+          <keep-alive v-if="keepAliveComponents.length" :include="keepAliveComponents">
+            <component :is="Component" :key="route.fullPath" />
+          </keep-alive>
+          <component v-else :is="Component" :key="route.fullPath" />
+        </div>
+      </transition>
     </template>
   </RouterView>
 </template>
@@ -57,4 +67,6 @@
   });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+/* 样式已移至 src/styles/transition/boing.less */
+</style>
