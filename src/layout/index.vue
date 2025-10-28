@@ -91,11 +91,9 @@
   import { AsideMenu } from './components/Menu';
   import { PageHeader } from './components/Header';
   import { useProjectSetting } from '@/hooks/setting/useProjectSetting';
-  import { useDesignSetting } from '@/hooks/setting/useDesignSetting';
   import { useRoute } from 'vue-router';
   import { useProjectSettingStore } from '@/store/modules/projectSetting';
 
-  const { getDarkTheme } = useDesignSetting();
   const {
     // showFooter,
     navMode,
@@ -109,7 +107,7 @@
 
   const collapsed = ref<boolean>(false);
 
-  const { mobileWidth, menuWidth } = unref(menuSetting);
+  const { mobileWidth } = unref(menuSetting);
 
   const isMobile = computed<boolean>({
     get: () => settingStore.getIsMobile,
