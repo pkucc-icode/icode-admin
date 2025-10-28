@@ -69,16 +69,16 @@ const editType = ref<'node' | 'edge'>('node');
 const editValue = ref('');
 const editData = ref<any>(null);
 
-const nodeTypeColors: Record<string, string> = {
-  '人物': '#f59311', 
-  '组织': '#0e72cc', 
-  '地点': '#fa4343',
-  '事件': '#16afcc',
-  '概念': '#6ca30f' 
-};
+// const nodeTypeColors: Record<string, string> = {
+//   '人物': '#f59311', 
+//   '组织': '#0e72cc', 
+//   '地点': '#fa4343',
+//   '事件': '#16afcc',
+//   '概念': '#6ca30f' 
+// };
 
 
-const [modalRegister, { openModal, closeModal, setProps }] = useModal({
+const [modalRegister, { closeModal, setProps }] = useModal({
   title: '编辑节点',
   subBtuText: '保存',
 });
