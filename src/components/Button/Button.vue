@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDesignSettingStore } from '@/store/modules/designSetting'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
+import { getCSSVariable } from '@/utils/cssUtil';
 
 interface ButtonProps {
   type?: 'default' | 'primary' | 'info' | 'success' | 'warning' | 'error'
@@ -26,20 +27,6 @@ const emit = defineEmits<{
 
 const designStore = useDesignSettingStore()
 
-const cssVariableCache = ref<Record<string, string>>({})
-
-const getCSSVariableValue = (variableName: string): string => {
-  if (typeof window === 'undefined') return ''
-  if (cssVariableCache.value[variableName]) {
-    return cssVariableCache.value[variableName]
-  }
-  const value = getComputedStyle(document.documentElement)
-    .getPropertyValue(variableName)
-    .trim()
-  cssVariableCache.value[variableName] = value
-  return value
-}
-
 const colorTypeMap = {
   primary: '--primary',
   info: '--info',
@@ -53,7 +40,7 @@ const coloredTypes = ['primary', 'info', 'success', 'warning', 'error'] as const
 const buttonProps = computed(() => {
   const { icon, ...rest } = props
   if (!rest.color && rest.type && rest.type in colorTypeMap) {
-    rest.color = getCSSVariableValue(colorTypeMap[rest.type as keyof typeof colorTypeMap])
+    rest.color = getCSSVariable(colorTypeMap[rest.type as keyof typeof colorTypeMap])
   }
   if (rest.color && rest.type && coloredTypes.includes(rest.type as any) && !rest.ghost && designStore.darkTheme) {
     rest.textColor = 'white'

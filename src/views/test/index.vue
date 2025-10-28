@@ -146,7 +146,7 @@
   </n-space>
     </Card>
   </div>
-  <Card class="glass-card">
+  <Card class="glass-card mb-4">
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
@@ -162,6 +162,11 @@
       </template>
     </BasicTable>    
   </Card>
+  <Card class="glass-card">
+    <RelationGraph :node-mapping="testNodeType" :graph-data="testGraphData" 
+    class="h-96"
+    />
+  </Card>
   <CreateModal ref="createModalRef" />
 </template>
 
@@ -176,6 +181,8 @@
   import { Button } from '@/components/Button';
   import { CashOutline as CashIcon } from '@vicons/ionicons5';
   import CreateModal from '../list/basicList/CreateModal.vue';
+  import { type GraphData, RelationGraph } from '@/components/RelationGraph';
+  import { getCSSVariable } from '@/utils/cssUtil';
 
   const message = useMessage();
   const dialog = useDialog();
@@ -249,6 +256,32 @@
     console.log(record);
     message.success('您点击了编辑按钮');
   }
+
+  const testNodeType = {
+    '人物': getCSSVariable('--chart-1'), 
+    '组织': getCSSVariable('--chart-2'), 
+    '地点': getCSSVariable('--chart-3'), 
+    '事件': getCSSVariable('--chart-4'), 
+    '概念': getCSSVariable('--chart-5'), 
+  };
+
+  const testGraphData: GraphData = {
+    nodes: [
+      { id: '1', label: '人物A', type: '人物' },
+      { id: '2', label: '人物B', type: '人物' },
+      { id: '3', label: '组织C', type: '组织' },
+      { id: '4', label: '地点D', type: '地点' },
+      { id: '5', label: '事件E', type: '事件' }
+    ],
+    edges: [
+      { id: 'e1', source: '1', target: '2', label: '朋友' },
+      { id: 'e2', source: '1', target: '3', label: '隶属' },
+      { id: 'e3', source: '2', target: '3', label: '参与' },
+      { id: 'e4', source: '3', target: '4', label: '位于' },
+      { id: 'e5', source: '1', target: '5', label: '经历' },
+      { id: 'e6', source: '5', target: '4', label: '发生在' }
+    ]
+  };
 </script>
 
 <style lang="less" scoped></style>

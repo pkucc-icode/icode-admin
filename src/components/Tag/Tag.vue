@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useDesignSettingStore } from '@/store/modules/designSetting'
+import { getCSSVariable } from '@/utils/cssUtil';
 
 // 可以传入type，也可以直接传入color，组件会自动选择合适的字体颜色
 interface TagProps {
@@ -21,25 +22,11 @@ const presetMap = {
 
 // 缓存解析结果，避免重复计算
 const colorCache = ref<Record<string, { r: number; g: number; b: number } | null>>({})
-const cssVariableCache = ref<Record<string, string>>({})
 
 // 预编译正则表达式，避免重复创建
 const VAR_REGEX = /var\(--([^)]+)\)/
 const HEX_REGEX = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/
 const RGB_REGEX = /^rgba?\(([^)]+)\)$/
-
-/** 工具函数：获取 CSS 变量的实际值（带缓存） */
-function getCSSVariableValue(variable: string): string | null {
-  if (typeof window === 'undefined') return null
-  
-  if (cssVariableCache.value[variable]) {
-    return cssVariableCache.value[variable]
-  }
-  
-  const value = getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
-  cssVariableCache.value[variable] = value
-  return value
-}
 
 /** 工具函数：解析 hex/rgb 字符串为 RGB 对象（带缓存） */
 function parseColorToRgb(color: string): { r: number; g: number; b: number } | null {
@@ -56,7 +43,7 @@ function parseColorToRgb(color: string): { r: number; g: number; b: number } | n
   if (color.startsWith('var(')) {
     const varName = color.match(VAR_REGEX)?.[1]
     if (varName) {
-      const actualColor = getCSSVariableValue(`--${varName}`)
+      const actualColor = getCSSVariable(`--${varName}`)
       if (actualColor) {
         result = parseColorToRgb(actualColor)
       }

@@ -84,12 +84,8 @@
 
   onMounted(() => {
     document.addEventListener('mousedown', timekeeping);
-    // 初始化时设置正确的 dark 类
-    if (designStore.darkTheme) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // 初始化主题（从 localStorage 恢复）
+    designStore.initTheme();
   });
 
   onUnmounted(() => {

@@ -47,7 +47,7 @@
           <PageHeader v-model:collapsed="collapsed" :inverted="inverted" />
         </div>
       </n-layout-header>
-      <transition :name="getTransitionName" mode="out-in" appear>
+      <transition mode="out-in" appear>
         <div class="h-[calc(100vh-96px)] ml-2 mr-4 mt-[80px] overflow-y-hidden rounded-[30px] glass-card relative"
         >
           <ScrollArea
