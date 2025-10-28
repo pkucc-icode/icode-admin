@@ -98,6 +98,15 @@ const initChart = () => {
   const option = {
     tooltip: {
       show: true,
+      trigger: 'item',
+      backgroundColor: getCSSVariable('--card') || '#ffffff',
+      borderColor: getCSSVariable('--border') || '#e5e7eb',
+      borderWidth: 1,
+      textStyle: {
+        color: getCSSVariable('--foreground') || '#000000',
+        fontSize: 13
+      },
+      padding: [8, 12],
       formatter: (params: any) => {
         if (params.dataType === 'node') {
           return `<b>${params.data.category || '未知'}</b><br/>${params.data.name}`;
@@ -214,27 +223,29 @@ const updateChart = (data: GraphData) => {
       symbol: 'circle',
       symbolSize: symbolSize,
       itemStyle: {
-        color:new echarts.graphic.RadialGradient(0.5, 0.5, 1, [{
-            offset: 0.1,
-            color: isDark.value ? '#000000' : '#ffffff',
-        }, {
-            offset: 1,
-            color: props.nodeMapping[node.type || ''] || '#9CA3AF'
-        }]),
-        // color: {
-        //   type: 'radial',
-        //   x: 0.5,
-        //   y: 0.5,
-        //   r: 0.8,
-        //   colorStops: [
-        //     { offset: 0, color: '#FFFFFF' }, // 中心亮
-        //     // { offset: 0, color: props.nodeMapping[node.type || ''] || '#9CA3AF' }, // 中心
-        //     { offset: 0.5, color: props.nodeMapping[node.type || ''] || '#9CA3AF' }, 
-        //     { offset: 1, color: '#000000' } // 边缘
-        //   ],
-        //   global: false
-        // },
         // color: props.nodeMapping[node.type || ''] || '#9CA3AF',
+        // 球
+        // color:new echarts.graphic.RadialGradient(0.5, 0.5, 1, [{
+        //     offset: 0.1,
+        //     color: isDark.value ? '#000000' : '#ffffff',
+        // }, {
+        //     offset: 1,
+        //     color: props.nodeMapping[node.type || ''] || '#9CA3AF'
+        // }]),
+        // 气泡
+        color: {
+          type: 'radial',
+          x: 0.5,
+          y: 0.5,
+          r: 0.8,
+          colorStops: [
+            { offset: 0,  color: isDark.value ? '#000000' : '#ffffff', }, // 中心亮
+            // { offset: 0, color: props.nodeMapping[node.type || ''] || '#9CA3AF' }, // 中心
+            { offset: 0.7, color: props.nodeMapping[node.type || ''] || '#9CA3AF' }, 
+            { offset: 1,  color: isDark.value ? '#ffffff' : '#000000', } // 边缘
+          ],
+          global: false
+        },
 
         // 节点阴影
         shadowBlur:  4,
@@ -277,7 +288,7 @@ const updateChart = (data: GraphData) => {
       formatter: edge.label,
       fontSize: 12,
       color: '#ffffff',
-      backgroundColor: getCSSVariable('--primary'),
+      backgroundColor: getCSSVariable('--text'),
       borderWidth: 1,
       borderRadius: 12,
       padding: [4, 8]
@@ -291,8 +302,6 @@ const updateChart = (data: GraphData) => {
       links: links
     }]
   });
-
-  console.log(chartInstance.getOption());
   
 };
 
